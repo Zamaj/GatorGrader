@@ -40,6 +40,7 @@ public:
 	void addStudent(std::string first, std::string last);
 	void addAssignment();
 	void addAssignment(std::string name, double points);
+	void print();
 };
 
 class Instructor {
@@ -53,6 +54,7 @@ public:
 	Instructor(std::string name);
 	void setName(std::string name);
 	std::string getName();
+	std::vector<Course*> &getCourseList();
 	void firstTimeInstructor();
 	void addCourse();
 	void addCourse(std::string name);
