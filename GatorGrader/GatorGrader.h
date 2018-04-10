@@ -6,13 +6,16 @@ class Assignment {
 
 private:
 	std::string assignmentName;
-	double points;
+	double pointsEarned;
+	double pointsPossible;
 public:
 	Assignment(std::string name, double points);
-	void setAssignmentName();
+	void setAssignmentName(std::string name);
 	std::string getAssignmentName();
-	void setPoints();
-	double getPoints();
+	void setPointsPossible(double points);
+	double getPointsPossible();
+	void setPointsEarned(double points);
+	double getPointsEarned();
 };
 
 class Student {
