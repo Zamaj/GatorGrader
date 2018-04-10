@@ -7,8 +7,8 @@ class Assignment {
 private:
 	std::string assignmentName;
 	double points;
-
 public:
+	Assignment(std::string name, double points);
 	void setAssignmentName();
 	std::string getAssignmentName();
 	void setPoints();
@@ -26,15 +26,18 @@ private:
 	std::string courseName;
 public:
 	std::vector<std::string> students;
+	std::vector<Assignment*> assignments;
 	Course(std::string name);
 	void setCourseName(std::string name);
 	std::string getCourseName();
+	void courseOptions();
+	void addStudent();
+	void addAssignment();
 };
 
 class Instructor {
 private:
-	std::string name;
-	
+	std::string name;	
 public:
 	//ifstream courseData;
 	Course * currentCourse;
