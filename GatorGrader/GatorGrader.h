@@ -9,7 +9,7 @@ private:
 	double assignmentPoints;
 public:
 	Assignment(std::string name, double points);
-	void setAssignmentName();
+	void setAssignmentName();	
 	std::string getAssignmentName();
 	void setPoints();
 	double getPoints();
@@ -48,7 +48,7 @@ private:
 	std::string name;	
 	std::vector<Course*> courseList;
 public:
-	//ifstream courseData;
+	//ifstream file;
 	Course * currentCourse;	
 	Instructor();
 	Instructor(std::string name);
@@ -59,4 +59,5 @@ public:
 	void addCourse();
 	void addCourse(std::string name);
 	void menu();
+	void init();
 };
