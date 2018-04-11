@@ -113,9 +113,9 @@ int main()
 
 	cout << "Your courses:" << endl;
 
-	for (unsigned int i = 0; i < instructor->courseList.size(); i++) { // Prints course names
-		cout << instructor->courseList[i]->getCourseName() << endl;
-	}	
+	//for (unsigned int i = 0; i < instructor->courseList.size(); i++) { // Prints course names
+	//	cout << instructor->courseList[i]->getCourseName() << endl;
+	//}	
 
 	instructor->menu();
 
