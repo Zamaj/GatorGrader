@@ -41,11 +41,12 @@ public:
 	void addAssignment();
 	void addAssignment(std::string name, double points);
 	void print();
+	void courseMenu();
 };
 
 class Instructor {
 private:
-	std::string name;	
+	std::string instructorName;	
 	std::vector<Course*> courseList;
 public:
 	//ifstream file;
@@ -58,6 +59,7 @@ public:
 	void firstTimeInstructor();
 	void addCourse();
 	void addCourse(std::string name);
-	void menu();
+	void removeCourse();
+	void mainMenu();
 	void init();
 };

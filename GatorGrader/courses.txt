@@ -1,5 +1,0 @@
-#Calculus 1
-$John Smith
-$Zach Jackson
-$Denisse Ventura
-@Project 100
