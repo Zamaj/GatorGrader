@@ -48,8 +48,7 @@ class Instructor {
 private:
 	std::string instructorName;	
 	std::vector<Course*> courseList;
-public:
-	//ifstream file;
+public:	
 	Course * currentCourse;	
 	Instructor();
 	Instructor(std::string name);
