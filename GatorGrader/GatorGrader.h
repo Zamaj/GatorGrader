@@ -59,7 +59,7 @@ public:
 	void firstTimeInstructor();
 	void addCourse();
 	void addCourse(std::string name);
-	void removeCourse();
+	//void removeCourse();
 	void mainMenu();
 	void init();
 };
