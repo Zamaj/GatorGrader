@@ -1,7 +1,4 @@
 #pragma once
-#include "Assignment.h"
-#include "Course.h"
-#include "Instructor.h"
 #include <string>
 #include <vector>
 #include <fstream>
@@ -18,20 +15,3 @@ public:
 	std::string getFirstName();
 	std::string getLastName();
 };
-
-Student::Student() {
-
-}
-
-Student::Student(string first, string last) {
-	firstName = first;
-	lastName = last;
-}
-
-string Student::getFirstName() {
-	return firstName;
-}
-
-string Student::getLastName() {
-	return lastName;
-}
