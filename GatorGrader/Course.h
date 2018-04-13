@@ -1,9 +1,12 @@
+#pragma once
 #include "Assignment.h"
 #include "Student.h"
 #include "Instructor.h"
 #include <string>
 #include <vector>
 #include <fstream>
+
+using namespace std;
 
 class Course {
 private:

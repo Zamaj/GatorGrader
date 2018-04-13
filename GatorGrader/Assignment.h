@@ -1,9 +1,12 @@
+#pragma once
 #include <string>
 #include <vector>
 #include <fstream>
 #include "Student.h"
 #include "Course.h"
 #include "Instructor.h"
+
+using namespace std;
 
 class Assignment {
 
