@@ -1,4 +1,4 @@
-#include "stdafx.h"
+// #include "stdafx.h"
 #include "Assignment.h"
 #include "Student.h"
 #include "Course.h"
@@ -40,6 +40,11 @@ void Course::addAssignment() {
 void Course::addAssignment(string name, double points) {
 	Assignment *assignment = new Assignment(name, points);
 	assignmentList.push_back(assignment);
+}
+
+//adds all of the assignments in a course to each student
+void Course::refresh() {
+	studentList.front()->addStudentAssignment(assignmentList.front());
 }
 
 void Course::print() {

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <iostream>
 #include <fstream>
 
 using namespace std;
@@ -9,11 +10,15 @@ class Assignment {
 
 private:
 	std::string assignmentName;
-	double assignmentPoints;
+	double possiblePoints;
+	double earnedPoints;
 public:
 	Assignment(std::string name, double points);
-	void setAssignmentName();
+	void setAssignmentName(std::string name);
 	std::string getAssignmentName();
-	void setPoints();
-	double getPoints();
+	void setPossiblePoints(double points);
+	double getPossiblePoints();
+	void setEarnedPoints(double points);
+	double getEarnedPoints();
+	double getPercentage();
 };
