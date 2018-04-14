@@ -18,15 +18,16 @@ private:
 	std::vector<Student*> studentList;
 	std::vector<Assignment*> assignmentList;
 public:
+	enum saveType {courseSave, studentSave, assignmentSave};
 	Course(std::string name);
 	~Course();
 	void setCourseName(std::string name);
 	std::string getCourseName();
-	std::string tag(bool whichType);	
+	std::string tag(saveType type);	
 	void showCourseOptions();
 	void addStudent();
 	void addStudent(std::string first, std::string last);
-	void save(std::string newItem, bool whichType);
+	void save(std::string newItem, saveType addItem);
 	void addAssignment();
 	void addAssignment(std::string name, double points);
 	void print();

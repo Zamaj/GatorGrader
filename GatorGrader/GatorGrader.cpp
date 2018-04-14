@@ -1,4 +1,4 @@
-// #include "stdafx.h"
+#include "stdafx.h"
 #include "GatorGrader.h"
 
 using namespace std;

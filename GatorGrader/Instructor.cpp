@@ -1,4 +1,4 @@
-// #include "stdafx.h"
+#include "stdafx.h"
 #include "Instructor.h"
 #include "Assignment.h"
 #include "Student.h"
@@ -39,21 +39,26 @@ void Instructor::firstTimeInstructor() {
 
 void Instructor::addCourse() {
 
-	string addName;
+	string newCourseName;
 	cout << "Enter the name of a course: " << endl;
-	getline(cin, addName);
+	getline(cin, newCourseName);
 
 	vector<Course*>::iterator it;
 
 	for (it = courseList.begin(); it != courseList.end(); it++) {
+		string temp = (*it)->getCourseName();
 
-		if ((*it)->getCourseName == addName) {
-
-			Course* course = new Course(addName);
-			courseList.push_back(course);
-			break;
+		if (temp == newCourseName) {
+			cout << "You already have a course named '" << newCourseName << "'." << endl;
+			return;
 		}
-	}	
+	}
+
+	Course *course = new Course(newCourseName);
+	courseList.push_back(course);
+	course->save(newCourseName, Course::courseSave);
+
+	cout << "Course '" << newCourseName << "' added" << endl;
 }
 
 void Instructor::addCourse(string name) {

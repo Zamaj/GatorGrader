@@ -1,4 +1,4 @@
-// #include "stdafx.h"
+#include "stdafx.h"
 #include "Assignment.h"
 #include "Student.h"
 #include "Course.h"
@@ -41,16 +41,21 @@ string Course::getCourseName() {
 	return courseName;
 }
 
-string Course::tag(bool whichType) {
+string Course::tag(saveType type) {
 
 	string tag;
 
-	if (whichType == 0) {
+	if (type == courseSave) {
+		tag = "#";
+		return tag;
+	}
+
+	if (type == studentSave) {
 		tag = getCourseName().append("$");
 		return 	tag;
 	}
 
-	if (whichType == 1) {
+	if (type == assignmentSave) {
 		tag = getCourseName().append("@");
 		return tag;
 	}	
@@ -61,7 +66,7 @@ void Course::addStudent() {
 	string newStudentFirstName;
 	string newStudentLastName;
 
-	cout << "Please enter sutdent's first and last name:" << endl;
+	cout << "Please enter student's first and last name:" << endl;
 	getline(cin, newStudentName);
 
 	istringstream studentAttributes(newStudentName);
@@ -70,9 +75,11 @@ void Course::addStudent() {
 	Student *student = new Student(newStudentFirstName, newStudentLastName);
 	studentList.push_back(student);
 
-	save(newStudentName, 0);
+	save(newStudentName, studentSave);
 
-	cout << "Student '" << newStudentFirstName << newStudentLastName << "' added to course " << courseName << endl;
+	cout << "Student '" << newStudentFirstName << " " << newStudentLastName << "' added to course " << courseName << endl;
+
+	cout << endl;
 }
 
 void Course::addStudent(string first, string last) {
@@ -97,7 +104,7 @@ void Course::addAssignment() {
 	Assignment *assignment = new Assignment(newAssignmentName, points);
 	assignmentList.push_back(assignment);
 
-	save(newAssignmentName, 1);
+	save(newAssignmentName, assignmentSave);
 
 	cout << "Assignment '" << newAssignmentName << "' worth " << points << " points has been added to course " << courseName << endl;
 }
@@ -107,7 +114,7 @@ void Course::addAssignment(string name, double points) {
 	assignmentList.push_back(assignment);
 }
 
-void Course::save(string newItem, bool whichType) {
+void Course::save(string newItem, saveType addItem) {
 
 	string line;
 	ifstream file("courses.txt");
@@ -121,7 +128,7 @@ void Course::save(string newItem, bool whichType) {
 
 	for (it = fileContent.begin(); it != fileContent.end(); it++) {
 		if (it->substr(1, it->back()) == courseName) {
-			fileContent.insert(it + 1, newItem.insert(0, tag(whichType)));
+			fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
 			break;
 		}
 	}
@@ -159,14 +166,18 @@ void Course::print() {
 	for (unsigned int i = 0; i < assignmentList.size(); i++) {
 		cout << assignmentList[i]->getAssignmentName() << ", ";
 	}
+
+	cout << endl;
 }
 
 void Course::courseMenu() {
+
 	string menuChoice;
 
 	cout << "What would you like to do in " << courseName << "?" << endl;
 	cout << "1. New assignment" << endl;
 	cout << "2. Add student(s)" << endl;
+	cout << "3. Print course" << endl;
 
 	getline(cin, menuChoice);
 
@@ -176,5 +187,9 @@ void Course::courseMenu() {
 
 	if (menuChoice == "2") {
 		addStudent();
+	}
+
+	if (menuChoice == "3") {
+		print();
 	}
 }
