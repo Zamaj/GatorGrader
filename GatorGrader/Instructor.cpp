@@ -38,14 +38,22 @@ void Instructor::firstTimeInstructor() {
 }
 
 void Instructor::addCourse() {
-	string courseName;
-	cout << "Enter the name of a course to begin: " << endl;
-	getline(cin, courseName);
 
-	Course* course = new Course(courseName);
+	string addName;
+	cout << "Enter the name of a course: " << endl;
+	getline(cin, addName);
 
+	vector<Course*>::iterator it;
 
-	courseList.push_back(course);
+	for (it = courseList.begin(); it != courseList.end(); it++) {
+
+		if ((*it)->getCourseName == addName) {
+
+			Course* course = new Course(addName);
+			courseList.push_back(course);
+			break;
+		}
+	}	
 }
 
 void Instructor::addCourse(string name) {
@@ -55,7 +63,20 @@ void Instructor::addCourse(string name) {
 }
 
 void Instructor::removeCourse() {
-
+	string removeName;
+	cout << "Enter the name of the course you would like to delete:" << endl;
+	getline(cin, removeName);
+	
+	vector<Course*>::iterator it;
+	for (it = courseList.begin(); it != courseList.end();) {
+		if ((*it)->getCourseName() == removeName) {
+			delete *it;
+			it = courseList.erase(it);
+		}
+		else {
+			it++;
+		}
+	}
 }
 
 void Instructor::mainMenu() {
@@ -75,8 +96,12 @@ void Instructor::mainMenu() {
 
 		bool courseFound = false;
 
-		if (courseChoice == "1" || courseChoice == "Add course") {
+		if (courseChoice == "1" || courseChoice == "Add course" || courseChoice == "add course" || courseChoice == "Add Course") {
 			addCourse();
+		}
+
+		if (courseChoice == "2" || courseChoice == "Remove course" || courseChoice == "remove course" || courseChoice == "Remove Course") {
+			removeCourse();
 		}
 
 		for (unsigned int i = 0; i < courseList.size(); i++) {
@@ -101,28 +126,33 @@ void Instructor::init() {
 	}
 	else {
 		string foundCourseData;
+		string foundCourseName;
 		while (getline(file, foundCourseData)) {
 
 			if (foundCourseData.front() == '#') {
 				foundCourseData.erase(foundCourseData.begin());
 				addCourse(foundCourseData);
-			}
+				foundCourseName = foundCourseData;
+				continue;
+			}			
 
-			if (foundCourseData.front() == '$') {
-				foundCourseData.erase(foundCourseData.begin());
+			if (foundCourseData.at(foundCourseName.size()) == '$') {
+				foundCourseData.erase(0, foundCourseName.size() + 1);
 				string foundFirstName, foundLastName;
 				istringstream studentName(foundCourseData);
 				studentName >> foundFirstName >> foundLastName;
 				currentCourse->addStudent(foundFirstName, foundLastName);
+				continue;
 			}
 
-			if (foundCourseData.front() == '@') {
-				foundCourseData.erase(foundCourseData.begin());
-				string foundCourseName;
-				double foundCoursePoints;
+			if (foundCourseData.at(foundCourseName.size()) == '@') {
+				foundCourseData.erase(0, foundCourseName.size() + 1);
+				string foundAssignmentName;
+				double foundAssignmentPoints;
 				istringstream assignmentAttributes(foundCourseData);
-				assignmentAttributes >> foundCourseName >> foundCoursePoints;
-				currentCourse->addAssignment(foundCourseName, foundCoursePoints);
+				assignmentAttributes >> foundAssignmentName >> foundAssignmentPoints;
+				currentCourse->addAssignment(foundAssignmentName, foundAssignmentPoints);
+				continue;
 			}
 		}
 	}

@@ -20,7 +20,7 @@ private:
 public:
 	Course *currentCourse;
 	Instructor();
-	Instructor(std::string name);
+	Instructor(std::string name);	
 	void setName(std::string name);
 	std::string getName();
 	//std::vector<Course*> &getCourseList();

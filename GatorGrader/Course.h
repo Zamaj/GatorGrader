@@ -19,11 +19,14 @@ private:
 	std::vector<Assignment*> assignmentList;
 public:
 	Course(std::string name);
+	~Course();
 	void setCourseName(std::string name);
 	std::string getCourseName();
+	std::string tag(bool whichType);	
 	void showCourseOptions();
 	void addStudent();
 	void addStudent(std::string first, std::string last);
+	void save(std::string newItem, bool whichType);
 	void addAssignment();
 	void addAssignment(std::string name, double points);
 	void print();
