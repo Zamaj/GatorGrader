@@ -31,4 +31,5 @@ public:
 	void addAssignment(std::string name, double points);
 	void print();
 	void courseMenu();
+	void refresh();
 };

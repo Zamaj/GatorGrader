@@ -1,4 +1,4 @@
-#include "stdafx.h"
+// #include "stdafx.h"
 #include "Assignment.h"
 #include "Student.h"
 #include "Course.h"
@@ -137,6 +137,11 @@ void Course::save(string newItem, bool whichType) {
 
 	remove("courses.txt");
 	rename("temp.txt", "courses.txt");	
+}
+
+//adds all of the assignments in a course to each student
+void Course::refresh() {
+	studentList.front()->addStudentAssignment(assignmentList.front());
 }
 
 void Course::print() {
