@@ -23,8 +23,7 @@ public:
 	~Course();
 	void setCourseName(std::string name);
 	std::string getCourseName();
-	std::string tag(saveType type);	
-	void showCourseOptions();
+	std::string tag(saveType type);
 	void addStudent();
 	void addStudent(std::string first, std::string last);
 	void save(std::string newItem, saveType addItem);

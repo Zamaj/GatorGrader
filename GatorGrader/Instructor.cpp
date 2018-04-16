@@ -71,6 +71,19 @@ void Instructor::removeCourse() {
 	string removeName;
 	cout << "Enter the name of the course you would like to delete:" << endl;
 	getline(cin, removeName);
+
+	string confirmChoice;
+
+	
+	cout << "Are you sure you would like to delete '" << removeName << "' and all of its data?" << endl;
+	cout << "1. Yes" << endl;
+	cout << "2. No" << endl;
+
+	getline(cin, confirmChoice);
+
+	if (confirmChoice != "1") {
+		return;
+	}		
 	
 	vector<Course*>::iterator it;
 	for (it = courseList.begin(); it != courseList.end();) {
@@ -82,9 +95,12 @@ void Instructor::removeCourse() {
 			it++;
 		}
 	}
+
+	cout << "Course '" << removeName << "' has been removed" << endl;
 }
 
 void Instructor::mainMenu() {
+
 	cout << "Your Courses:" << endl;
 	for (unsigned int i = 0; i < courseList.size(); i++) {
 		cout << courseList[i]->getCourseName() << endl;
@@ -105,21 +121,23 @@ void Instructor::mainMenu() {
 			addCourse();
 		}
 
-		if (courseChoice == "2" || courseChoice == "Remove course" || courseChoice == "remove course" || courseChoice == "Remove Course") {
+		else if (courseChoice == "2" || courseChoice == "Remove course" || courseChoice == "remove course" || courseChoice == "Remove Course") {
 			removeCourse();
 		}
 
-		for (unsigned int i = 0; i < courseList.size(); i++) {
-			if (courseList[i]->getCourseName() == courseChoice) {
-				currentCourse = courseList[i];
-				courseFound = true;
-				currentCourse->courseMenu();
+		else {
+			for (unsigned int i = 0; i < courseList.size(); i++) {
+				if (courseList[i]->getCourseName() == courseChoice) {
+					currentCourse = courseList[i];
+					courseFound = true;
+					currentCourse->courseMenu();
+				}
 			}
-		}
 
-		if (courseFound == false) {
-			cout << "You have no course '" << courseChoice << "'." << endl;
-		}
+			if (courseFound == false) {
+				cout << "You have no course '" << courseChoice << "'." << endl;
+			}
+		}		
 	}
 }
 
