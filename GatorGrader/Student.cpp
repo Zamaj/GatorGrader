@@ -12,9 +12,10 @@ Student::Student() {
 
 }
 
-Student::Student(string first, string last) {
+Student::Student(string first, string last, string full) {
 	firstName = first;
 	lastName = last;
+	fullName = full;
 }
 
 std::string Student::getFirstName() {
@@ -29,15 +30,6 @@ void Student::addStudentAssignment(Assignment *assignment) {
 	assignments.push_back(assignment);
 }
 
-void Student::gradeStudentAssignment(std::string assingnmentName, double points) {
-	for (auto it = assignments.begin(); it != assignments.end(); it++) {
-		if ((*it)->getAssignmentName() == assingnmentName) {
-			(*it)->setEarnedPoints(points);
-			return;
-		}
-		else {
-			cout << firstName << " " << lastName << " has no assignment '" << assingnmentName << "'" << endl;
-			return;
-		}
-	}
+string Student::getFullName() {
+	return fullName;
 }

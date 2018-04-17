@@ -58,7 +58,11 @@ string Course::tag(saveType type) {
 	if (type == assignmentSave) {
 		tag = getCourseName().append("@");
 		return tag;
-	}	
+	}
+
+	if (type = masterAssignmentSave) {
+		tag = getCourseName().append("&");
+	}
 }
 
 void Course::addStudent() {
@@ -75,15 +79,15 @@ void Course::addStudent() {
 	Student *student = new Student(newStudentFirstName, newStudentLastName);
 	studentList.push_back(student);
 
-	save(newStudentName, studentSave);
+	save(newStudentName, 0, studentSave);
 
 	cout << "Student '" << newStudentFirstName << " " << newStudentLastName << "' added to course " << courseName << endl;
 
 	cout << endl;
 }
 
-void Course::addStudent(string first, string last) {
-	Student *student = new Student(first, last);
+void Course::addStudent(string first, string last, string full) {
+	Student *student = new Student(first, last, full);
 	studentList.push_back(student);
 }
 
@@ -102,15 +106,9 @@ void Course::addAssignment() {
 	points = atof(newAssignmentPoints.c_str());
 
 	Assignment *assignment = new Assignment(newAssignmentName, points);
-
-	vector<Student*>::iterator it;
-
-	for (it = studentList.begin(); it != studentList.end(); it++) {
-		(*it)->addStudentAssignment(assignment);
-	}
 	assignmentList.push_back(assignment);
 
-	save(newAssignmentName, assignmentSave);
+	save(newAssignmentName,points, assignmentSave);
 
 	cout << "Assignment '" << newAssignmentName << "' worth " << points << " points has been added to course " << courseName << endl;
 }
@@ -122,39 +120,83 @@ void Course::addAssignment(string name, double points) {
 
 void Course::gradeAssignment() {
 
-	string assignmentChoice;
+	string whichAssignment;
 	cout << "Which assignment would you like to grade?";
-	getline(cin, assignmentChoice);
+
+	getline(cin, whichAssignment);
+
+	string oneOrAll;
+	cout << "Would you like to grade an assignment for a single student or all students?" << endl;
+	cout << "1. Single student" << endl;
+	cout << "2. All students" << endl;
+
+	getline(cin, oneOrAll);
+
+	if (oneOrAll == "1") {
 		
-	vector<Student*>::iterator it;
 
-	for (it = studentList.begin(); it != studentList.end(); it++) {
-		string pointsstr;
-		double points;
-		cout << (*it)->getFirstName() << (*it)->getLastName() << ":" << endl;
-		getline(cin, pointsstr);
-		points = atof(pointsstr.c_str());
-
-		(*it)->gradeStudentAssignment(assignmentChoice, points);
+		for (unsigned int i = 0; i < studentList.size(); i++) {
+			if studentList[i]->
+		}
 	}
+
+	if (oneOrAll == "2") {
+		cout << "Enter the grade for each student:" << endl;
+		cout << "(If you wish to exit grading process grading at any point, just enter 'c')" << endl;
+
+		string grade;
+		cout << studentList[i]->getFirstName << studentList[i]->getLastName << ": " << endl;
+		getline(cin, grade);
+
+		if (grade == "c") {
+			return;
+		}
+
+		else {
+			studentList[i]->
+		}
+	}
+
+	cout << "Which assignment would you like to grade?";
 }
 
-void Course::save(string newItem, saveType addItem) {
+void Course::save(string newItem, double numPoints, saveType addItem) {
 
 	string line;
 	ifstream file("courses.txt");
 	ofstream temp("temp.txt");
 	vector<string> fileContent;
-	vector<string>::iterator it;
+	string reset = newItem;
 
 	while (getline(file, line)) {
 		fileContent.push_back(line);
-	}
+	}	
 
-	for (it = fileContent.begin(); it != fileContent.end(); it++) {
-		if (it->substr(1, it->back()) == courseName) {
-			fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
+	for (unsigned int i = 0; i < fileContent.size(); i++) {
+
+		vector<string>::iterator it = fileContent.begin() + i;
+		newItem = reset;
+
+		if (addItem == courseSave) {
+			fileContent.insert(it, newItem.insert(0, tag(addItem)));
 			break;
+		}
+
+		if (addItem == studentSave) {
+			if (it->substr(1, it->back()) == courseName) {
+				fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
+				break;
+			}
+		}
+
+		if (addItem == assignmentSave) {
+			if (it->substr(1, it->back()) == courseName) {
+				
+				fileContent.insert(it + 1, newItem.insert(0, tag(addItem)).append(to_string(numPoints)));
+			}
+			if (it->substr(0, courseName.size()) == courseName && it->at(courseName.size()) == '$') {							
+				fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
+			}	
 		}
 	}
 
@@ -182,14 +224,23 @@ void Course::print() {
 
 	cout << "Students:" << endl;
 	for (unsigned int i = 0; i < studentList.size(); i++) {
-		cout << studentList[i]->getFirstName() << " " << studentList[i]->getLastName() << ", ";
-	}
+		if (studentList[i] == studentList.back()) {
+			cout << studentList[i]->getFirstName() << " " << studentList[i]->getLastName() << endl;
 
-	cout << endl;
+		}
+		else {
+			cout << studentList[i]->getFirstName() << " " << studentList[i]->getLastName() << ", ";
+		}
+	}	
 
 	cout << "Assignments:" << endl;
 	for (unsigned int i = 0; i < assignmentList.size(); i++) {
-		cout << assignmentList[i]->getAssignmentName() << ", ";
+		if (assignmentList[i] == assignmentList.back()) {
+			cout << assignmentList[i]->getAssignmentName() << assignmentList[i]->getPossiblePoints() << endl;
+		}
+		else {
+			cout << assignmentList[i]->getAssignmentName() << assignmentList[i]->getPossiblePoints() << ", ";
+		}
 	}
 
 	cout << endl;
@@ -200,26 +251,26 @@ void Course::courseMenu() {
 	string menuChoice;
 
 	cout << "What would you like to do in " << courseName << "?" << endl;
-	cout << "1. New assignment" << endl;
-	cout << "2. Add student(s)" << endl;
-	cout << "3. Print course" << endl;
-	cout << "4. Grade assignment" << endl;
+	cout << "1. Grade Assignment" << endl;
+	cout << "2. New assignment" << endl;
+	cout << "3. Add student(s)" << endl;
+	cout << "4. Print course" << endl;
 
 	getline(cin, menuChoice);
 
-	if (menuChoice == "1" || menuChoice == "New assignment" || menuChoice == "new assignment" || menuChoice == "New Assignment") {
-		addAssignment();
+	if (menuChoice == "1") {
+		gradeAssignment();
 	}
 
 	if (menuChoice == "2") {
-		addStudent();
+		addAssignment();
 	}
 
 	if (menuChoice == "3") {
-		print();
+		addStudent();
 	}
 
 	if (menuChoice == "4") {
-		gradeAssignment();
+		print();
 	}
 }
