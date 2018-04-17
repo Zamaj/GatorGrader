@@ -80,7 +80,7 @@ void Course::addStudent() {
 	Student *student = new Student(newStudentFirstName, newStudentLastName, newStudentName);
 	studentList.push_back(student);
 
-	save(newStudentName, 0, studentSave);	
+	save("", newStudentName, 0, studentSave);	
 
 	cout << "Student '" << newStudentFirstName << " " << newStudentLastName << "' added to course " << courseName << endl;
 
@@ -113,8 +113,8 @@ void Course::addAssignment() {
 		studentList[i]->addStudentAssignment(assignment);
 	}
 
-	save(newAssignmentName,points, assignmentSave);
-	save(newAssignmentName, points, masterAssignmentSave);
+	save("", newAssignmentName,points, assignmentSave);
+	save("", newAssignmentName, points, masterAssignmentSave);
 
 	cout << "Assignment '" << newAssignmentName << "' worth " << points << " points has been added to course " << courseName << endl;
 }
@@ -186,13 +186,16 @@ void Course::gradeAssignment() {
 	cout << "Which assignment would you like to grade?";
 }
 
-void Course::save(string newItem, double numPoints, saveType addItem) {
+void Course::save(string studentName, string newItem, double numPoints, saveType addItem) {
 
 	string line;
 	ifstream file("courses.txt");
 	ofstream temp("temp.txt");
 	vector<string> fileContent;
 	string reset = newItem;
+
+	string points = to_string(numPoints);
+	points.erase(points.end() - 4, points.end());
 
 	while (getline(file, line)) {
 		fileContent.push_back(line);
@@ -224,14 +227,17 @@ void Course::save(string newItem, double numPoints, saveType addItem) {
 		if (addItem == masterAssignmentSave) {
 			if (it->substr(1, it->back()) == courseName) {
 				newItem.insert(0, tag(addItem));
-				newItem.append(to_string(numPoints));
+				newItem.append(" ");
+
+				newItem.append(points);
 				fileContent.insert(it + 1, newItem);
 			}
 		}
 
 		if (addItem == gradeSave) {
-			if (it->substr(0, courseName.size()) == courseName && it->at(courseName.size()) == '@') {
-				fileContent[i].append(to_string(numPoints));
+			if ((fileContent[i].substr(courseName.size() + 1, fileContent[i].back()) == studentName) && ((it + 1)->substr(0, courseName.size()) == courseName && (it + 1)->at(courseName.size()) == '@')) {
+				fileContent[i + 1].append(" ");
+				fileContent[i + 1].append(points);
 			}
 		}
 	}

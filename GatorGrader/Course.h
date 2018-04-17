@@ -28,7 +28,7 @@ public:
 	std::string tag(saveType type);
 	void addStudent();
 	void addStudent(std::string first, std::string last, std::string full);
-	void save(std::string newItem, double numPoints, saveType addItem);
+	void save(std::string studentName, std::string newItem, double numPoints, saveType addItem);
 	void addAssignment();
 	void addAssignment(std::string name, double points);
 	void gradeAssignment();

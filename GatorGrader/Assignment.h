@@ -22,4 +22,5 @@ public:
 	void setEarnedPoints(double points);
 	double getEarnedPoints();
 	double getPercentage();
+	bool isGraded();
 };

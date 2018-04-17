@@ -50,3 +50,7 @@ double Assignment::getPercentage() {
 	return earnedPoints/possiblePoints;
 }
 
+bool Assignment::isGraded() {
+	return assignmentGraded;
+}
+

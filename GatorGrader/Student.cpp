@@ -45,6 +45,7 @@ void Student::gradeStudentAssignment(string whichAssignment, Course * course) {
 			points = atof(pointsStr.c_str());
 
 			assignments[i]->setEarnedPoints(points);
+			course->save(fullName, whichAssignment, 0, Course::gradeSave);
 
 			cout << fullName << ": " << points << "/" << assignments[i]->getPossiblePoints() << " on " << assignments[i]->getAssignmentName() << endl;
 			return;
@@ -58,9 +59,9 @@ void Student::gradeStudentAssignment(string assignment, double points, Course* c
 
 	for (unsigned int i = 0; i < assignments.size(); i++) {
 		if (assignments[i]->getAssignmentName() == assignment) {
-			assignments[i]->setEarnedPoints(points);
 
-			course->save(assignment, points, Course::gradeSave);
+			assignments[i]->setEarnedPoints(points);
+			course->save(fullName, assignment, points, Course::gradeSave);
 			
 			cout << fullName << ": " << assignments[i]->getEarnedPoints() << "/" << assignments[i]->getPossiblePoints() << endl;
 		}
