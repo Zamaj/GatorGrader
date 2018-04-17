@@ -56,7 +56,7 @@ void Instructor::addCourse() {
 
 	Course *course = new Course(newCourseName);
 	courseList.push_back(course);
-	course->save(newCourseName, Course::courseSave);
+	course->save(newCourseName, 0, Course::courseSave);
 
 	cout << "Course '" << newCourseName << "' added" << endl;
 }
@@ -168,7 +168,7 @@ void Instructor::init() {
 				continue;
 			}
 
-			if (foundCourseData.at(foundCourseName.size()) == '@') {
+			if (foundCourseData.at(foundCourseName.size()) == '&') {
 				foundCourseData.erase(0, foundCourseName.size() + 1);
 				string foundAssignmentName;
 				double foundAssignmentPoints;

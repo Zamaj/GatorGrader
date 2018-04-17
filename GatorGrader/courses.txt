@@ -1,4 +1,9 @@
+#Calculus 1
+Calculus 1&Project 100
+Calculus 1$John Smith
+Calculus 1$Zach Jackson
+Calculus 1$Denisse Ventura
 #Programming Fundamentals 2
+Programming Fundamentals 2&Final 300
 Programming Fundamentals 2$Brandon Payne
 Programming Fundamentals 2$Zoe Frogillini
-Programming Fundamentals 2@Final 300
