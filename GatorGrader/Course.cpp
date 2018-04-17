@@ -109,6 +109,10 @@ void Course::addAssignment() {
 	Assignment *assignment = new Assignment(newAssignmentName, points);
 	assignmentList.push_back(assignment);
 
+	for (unsigned int i = 0; i < studentList.size(); i++) {
+		studentList[i]->addStudentAssignment(assignment);
+	}
+
 	save(newAssignmentName,points, assignmentSave);
 	save(newAssignmentName, points, masterAssignmentSave);
 
@@ -118,6 +122,10 @@ void Course::addAssignment() {
 void Course::addAssignment(string name, double points) {
 	Assignment *assignment = new Assignment(name, points);
 	assignmentList.push_back(assignment);
+
+	for (unsigned int i = 0; i < studentList.size(); i++) {
+		studentList[i]->addStudentAssignment(assignment);
+	}
 }
 
 void Course::gradeAssignment() {
