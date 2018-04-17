@@ -12,9 +12,10 @@ Student::Student() {
 
 }
 
-Student::Student(string first, string last) {
+Student::Student(string first, string last, string full) {
 	firstName = first;
 	lastName = last;
+	fullName = full;
 }
 
 std::string Student::getFirstName() {
@@ -27,4 +28,8 @@ std::string Student::getLastName() {
 
 void Student::addStudentAssignment(Assignment *assignment) {
 	assignments.push_back(assignment);
+}
+
+string Student::getFullName() {
+	return fullName;
 }

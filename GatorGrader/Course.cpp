@@ -86,8 +86,8 @@ void Course::addStudent() {
 	cout << endl;
 }
 
-void Course::addStudent(string first, string last) {
-	Student *student = new Student(first, last);
+void Course::addStudent(string first, string last, string full) {
+	Student *student = new Student(first, last, full);
 	studentList.push_back(student);
 }
 
@@ -116,6 +116,48 @@ void Course::addAssignment() {
 void Course::addAssignment(string name, double points) {
 	Assignment *assignment = new Assignment(name, points);
 	assignmentList.push_back(assignment);
+}
+
+void Course::gradeAssignment() {
+
+	string whichAssignment;
+	cout << "Which assignment would you like to grade?";
+
+	getline(cin, whichAssignment);
+
+	string oneOrAll;
+	cout << "Would you like to grade an assignment for a single student or all students?" << endl;
+	cout << "1. Single student" << endl;
+	cout << "2. All students" << endl;
+
+	getline(cin, oneOrAll);
+
+	if (oneOrAll == "1") {
+		
+
+		for (unsigned int i = 0; i < studentList.size(); i++) {
+			if studentList[i]->
+		}
+	}
+
+	if (oneOrAll == "2") {
+		cout << "Enter the grade for each student:" << endl;
+		cout << "(If you wish to exit grading process grading at any point, just enter 'c')" << endl;
+
+		string grade;
+		cout << studentList[i]->getFirstName << studentList[i]->getLastName << ": " << endl;
+		getline(cin, grade);
+
+		if (grade == "c") {
+			return;
+		}
+
+		else {
+			studentList[i]->
+		}
+	}
+
+	cout << "Which assignment would you like to grade?";
 }
 
 void Course::save(string newItem, double numPoints, saveType addItem) {
@@ -209,21 +251,26 @@ void Course::courseMenu() {
 	string menuChoice;
 
 	cout << "What would you like to do in " << courseName << "?" << endl;
-	cout << "1. New assignment" << endl;
-	cout << "2. Add student(s)" << endl;
-	cout << "3. Print course" << endl;
+	cout << "1. Grade Assignment" << endl;
+	cout << "2. New assignment" << endl;
+	cout << "3. Add student(s)" << endl;
+	cout << "4. Print course" << endl;
 
 	getline(cin, menuChoice);
 
-	if (menuChoice == "1" || menuChoice == "New assignment" || menuChoice == "new assignment" || menuChoice == "New Assignment") {
-		addAssignment();
+	if (menuChoice == "1") {
+		gradeAssignment();
 	}
 
 	if (menuChoice == "2") {
-		addStudent();
+		addAssignment();
 	}
 
 	if (menuChoice == "3") {
+		addStudent();
+	}
+
+	if (menuChoice == "4") {
 		print();
 	}
 }

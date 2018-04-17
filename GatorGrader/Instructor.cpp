@@ -164,7 +164,7 @@ void Instructor::init() {
 				string foundFirstName, foundLastName;
 				istringstream studentName(foundCourseData);
 				studentName >> foundFirstName >> foundLastName;
-				currentCourse->addStudent(foundFirstName, foundLastName);
+				currentCourse->addStudent(foundFirstName, foundLastName, foundCourseData);
 				continue;
 			}
 

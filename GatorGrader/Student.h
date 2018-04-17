@@ -13,11 +13,13 @@ class Student {
 private:
 	std::string firstName;
 	std::string lastName;
+	std::string fullName;
 	std::vector<Assignment*> assignments;
 public:
 	Student();
-	Student(std::string first, std::string last);
+	Student(std::string first, std::string last, string full);
 	std::string getFirstName();
 	std::string getLastName();
+	std::string getFullName();
 	void addStudentAssignment(Assignment *assignment);
 };
