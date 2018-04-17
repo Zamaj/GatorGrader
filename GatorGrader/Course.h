@@ -30,6 +30,7 @@ public:
 	void save(std::string newItem, saveType addItem);
 	void addAssignment();
 	void addAssignment(std::string name, double points);
+	void gradeAssignment();
 	void print();
 	void courseMenu();
 	void refresh();

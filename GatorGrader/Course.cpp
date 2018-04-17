@@ -102,6 +102,12 @@ void Course::addAssignment() {
 	points = atof(newAssignmentPoints.c_str());
 
 	Assignment *assignment = new Assignment(newAssignmentName, points);
+
+	vector<Student*>::iterator it;
+
+	for (it = studentList.begin(); it != studentList.end(); it++) {
+		(*it)->addStudentAssignment(assignment);
+	}
 	assignmentList.push_back(assignment);
 
 	save(newAssignmentName, assignmentSave);
@@ -112,6 +118,25 @@ void Course::addAssignment() {
 void Course::addAssignment(string name, double points) {
 	Assignment *assignment = new Assignment(name, points);
 	assignmentList.push_back(assignment);
+}
+
+void Course::gradeAssignment() {
+
+	string assignmentChoice;
+	cout << "Which assignment would you like to grade?";
+	getline(cin, assignmentChoice);
+		
+	vector<Student*>::iterator it;
+
+	for (it = studentList.begin(); it != studentList.end(); it++) {
+		string pointsstr;
+		double points;
+		cout << (*it)->getFirstName() << (*it)->getLastName() << ":" << endl;
+		getline(cin, pointsstr);
+		points = atof(pointsstr.c_str());
+
+		(*it)->gradeStudentAssignment(assignmentChoice, points);
+	}
 }
 
 void Course::save(string newItem, saveType addItem) {
@@ -178,6 +203,7 @@ void Course::courseMenu() {
 	cout << "1. New assignment" << endl;
 	cout << "2. Add student(s)" << endl;
 	cout << "3. Print course" << endl;
+	cout << "4. Grade assignment" << endl;
 
 	getline(cin, menuChoice);
 
@@ -191,5 +217,9 @@ void Course::courseMenu() {
 
 	if (menuChoice == "3") {
 		print();
+	}
+
+	if (menuChoice == "4") {
+		gradeAssignment();
 	}
 }

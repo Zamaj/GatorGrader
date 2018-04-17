@@ -28,3 +28,16 @@ std::string Student::getLastName() {
 void Student::addStudentAssignment(Assignment *assignment) {
 	assignments.push_back(assignment);
 }
+
+void Student::gradeStudentAssignment(std::string assingnmentName, double points) {
+	for (auto it = assignments.begin(); it != assignments.end(); it++) {
+		if ((*it)->getAssignmentName() == assingnmentName) {
+			(*it)->setEarnedPoints(points);
+			return;
+		}
+		else {
+			cout << firstName << " " << lastName << " has no assignment '" << assingnmentName << "'" << endl;
+			return;
+		}
+	}
+}

@@ -20,4 +20,5 @@ public:
 	std::string getFirstName();
 	std::string getLastName();
 	void addStudentAssignment(Assignment *assignment);
+	void gradeStudentAssignment(string assignmentname, double points);
 };
