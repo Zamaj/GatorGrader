@@ -33,3 +33,36 @@ void Student::addStudentAssignment(Assignment *assignment) {
 string Student::getFullName() {
 	return fullName;
 }
+
+void Student::gradeStudentAssignment(string whichAssignment, Course * course) {
+	
+	for (int i = 0; i < assignments.size(); i++) {
+		if (assignments[i]->getAssignmentName() == whichAssignment) {
+			string pointsStr;
+			double points;
+			cout << "Enter grade:" << endl;
+			getline(cin, pointsStr);
+			points = atof(pointsStr.c_str());
+
+			assignments[i]->setEarnedPoints(points);
+
+			cout << fullName << ": " << points << "/" << assignments[i]->getPossiblePoints() << " on " << assignments[i]->getAssignmentName() << endl;
+			return;
+		}
+	}
+
+	cout << "No assignment '" << whichAssignment << "'" << endl;
+}
+
+void Student::gradeStudentAssignment(string assignment, double points, Course* course) {
+
+	for (unsigned int i = 0; i < assignments.size(); i++) {
+		if (assignments[i]->getAssignmentName() == assignment) {
+			assignments[i]->setEarnedPoints(points);
+
+			course->save(assignment, points, Course::gradeSave);
+			
+			cout << fullName << ": " << assignments[i]->getEarnedPoints() << "/" << assignments[i]->getPossiblePoints() << endl;
+		}
+	}
+}

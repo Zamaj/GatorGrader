@@ -14,7 +14,7 @@ private:
 	std::string firstName;
 	std::string lastName;
 	std::string fullName;
-	std::vector<Assignment*> assignments;
+	std::vector<Assignment*> assignments;	
 public:
 	Student();
 	Student(std::string first, std::string last, string full);
@@ -22,5 +22,6 @@ public:
 	std::string getLastName();
 	std::string getFullName();
 	void addStudentAssignment(Assignment *assignment);
-	void gradeStudentAssignment(string assignmentname, double points);
+	void gradeStudentAssignment(std::string whichAssignment, Course* course);
+	void gradeStudentAssignment(std::string assignment, double points, Course* course);
 };

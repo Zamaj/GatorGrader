@@ -11,6 +11,8 @@
 Assignment::Assignment(std::string name, double points) {
 	assignmentName = name;
 	possiblePoints = points;
+	earnedPoints = 0;
+	assignmentGraded = false;
 }
 
 std::string Assignment::getAssignmentName() {
@@ -31,10 +33,17 @@ double Assignment::getPossiblePoints() {
 
 void Assignment::setEarnedPoints(double points) {
 	earnedPoints = points;
+	assignmentGraded = true;
 }
 
 double Assignment::getEarnedPoints() {
-	return earnedPoints;
+	if (assignmentGraded == true) {
+		return earnedPoints;
+	}
+	else {
+		cout << "Assignment not yet graded;" << endl;
+		return earnedPoints;
+	}
 }
 
 double Assignment::getPercentage() {

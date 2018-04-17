@@ -12,6 +12,7 @@ private:
 	std::string assignmentName;
 	double possiblePoints;
 	double earnedPoints;
+	bool assignmentGraded;
 public:
 	Assignment(std::string name, double points);
 	void setAssignmentName(std::string name);

@@ -62,6 +62,7 @@ string Course::tag(saveType type) {
 
 	if (type = masterAssignmentSave) {
 		tag = getCourseName().append("&");
+		return tag;
 	}
 }
 
@@ -76,10 +77,10 @@ void Course::addStudent() {
 	istringstream studentAttributes(newStudentName);
 	studentAttributes >> newStudentFirstName >> newStudentLastName;
 
-	Student *student = new Student(newStudentFirstName, newStudentLastName);
+	Student *student = new Student(newStudentFirstName, newStudentLastName, newStudentName);
 	studentList.push_back(student);
 
-	save(newStudentName, 0, studentSave);
+	save(newStudentName, 0, studentSave);	
 
 	cout << "Student '" << newStudentFirstName << " " << newStudentLastName << "' added to course " << courseName << endl;
 
@@ -109,6 +110,7 @@ void Course::addAssignment() {
 	assignmentList.push_back(assignment);
 
 	save(newAssignmentName,points, assignmentSave);
+	save(newAssignmentName, points, masterAssignmentSave);
 
 	cout << "Assignment '" << newAssignmentName << "' worth " << points << " points has been added to course " << courseName << endl;
 }
@@ -133,28 +135,44 @@ void Course::gradeAssignment() {
 	getline(cin, oneOrAll);
 
 	if (oneOrAll == "1") {
+		string whichStudent;
+		cout << "Which student would you like to grade?" << endl;
+		getline(cin, whichStudent);
 		
-
+		bool studentFound = false;
 		for (unsigned int i = 0; i < studentList.size(); i++) {
-			if studentList[i]->
+			if (studentList[i]->getFullName() == whichStudent) {
+				studentList[i]->gradeStudentAssignment(whichAssignment, this);
+				studentFound = true;
+				break;
+			}
 		}
+
+		if (studentFound == false) {
+			cout << "You have no student '" << whichStudent << "'" << endl;
+			return;
+		}		
 	}
 
 	if (oneOrAll == "2") {
 		cout << "Enter the grade for each student:" << endl;
 		cout << "(If you wish to exit grading process grading at any point, just enter 'c')" << endl;
 
-		string grade;
-		cout << studentList[i]->getFirstName << studentList[i]->getLastName << ": " << endl;
-		getline(cin, grade);
+		for (unsigned int i = 0; i < studentList.size(); i++) {
+			string grade;
+			double points;
+			cout << studentList[i]->getFullName() << ": " << endl;
+			getline(cin, grade);
 
-		if (grade == "c") {
-			return;
-		}
+			if (grade == "c") {
+				return;
+			}
 
-		else {
-			studentList[i]->
+			points = atof(grade.c_str());
+
+			studentList[i]->gradeStudentAssignment(whichAssignment, points, this);
 		}
+		
 	}
 
 	cout << "Which assignment would you like to grade?";
@@ -189,14 +207,24 @@ void Course::save(string newItem, double numPoints, saveType addItem) {
 			}
 		}
 
-		if (addItem == assignmentSave) {
-			if (it->substr(1, it->back()) == courseName) {
-				
-				fileContent.insert(it + 1, newItem.insert(0, tag(addItem)).append(to_string(numPoints)));
-			}
+		if (addItem == assignmentSave) {			
 			if (it->substr(0, courseName.size()) == courseName && it->at(courseName.size()) == '$') {							
 				fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
 			}	
+		}
+
+		if (addItem == masterAssignmentSave) {
+			if (it->substr(1, it->back()) == courseName) {
+				newItem.insert(0, tag(addItem));
+				newItem.append(to_string(numPoints));
+				fileContent.insert(it + 1, newItem);
+			}
+		}
+
+		if (addItem == gradeSave) {
+			if (it->substr(0, courseName.size()) == courseName && it->at(courseName.size()) == '@') {
+				fileContent[i].append(to_string(numPoints));
+			}
 		}
 	}
 
@@ -236,10 +264,10 @@ void Course::print() {
 	cout << "Assignments:" << endl;
 	for (unsigned int i = 0; i < assignmentList.size(); i++) {
 		if (assignmentList[i] == assignmentList.back()) {
-			cout << assignmentList[i]->getAssignmentName() << assignmentList[i]->getPossiblePoints() << endl;
+			cout << assignmentList[i]->getAssignmentName() << ": " << assignmentList[i]->getPossiblePoints() << endl;
 		}
 		else {
-			cout << assignmentList[i]->getAssignmentName() << assignmentList[i]->getPossiblePoints() << ", ";
+			cout << assignmentList[i]->getAssignmentName() << ": " << assignmentList[i]->getPossiblePoints() << ", ";
 		}
 	}
 
