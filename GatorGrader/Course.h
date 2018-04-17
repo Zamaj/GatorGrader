@@ -34,5 +34,4 @@ public:
 	void gradeAssignment();
 	void print();
 	void courseMenu();
-	void refresh();
 };

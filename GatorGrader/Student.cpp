@@ -34,6 +34,16 @@ string Student::getFullName() {
 	return fullName;
 }
 
+double Student::getAverageGrade() {
+	double earnedSum = 0;
+	double possibleSum = 0;
+	for (int i = 0; i < assignments.size(); i++) {
+		earnedSum = earnedSum + assignments[i]->getEarnedPoints();
+		possibleSum = possibleSum + assignments[i]->getPossiblePoints();
+	}
+	return earnedSum/possibleSum;
+}
+
 void Student::gradeStudentAssignment(string whichAssignment, Course * course) {
 	
 	for (int i = 0; i < assignments.size(); i++) {
