@@ -1,24 +1,6 @@
-#Calculus 2
-#Calculus 1
 #Calculus 3
-#Calculus 2
 #Discrete Structures
-#Calculus 1
-Calculus 1&Exam 280.000000
-Calculus 1&HW212.000000
-Calculus 1$John Smith
-Calculus 1@Exam 2
-Calculus 1@HW211.00000010.0000006.000000
-Calculus 1@HW111.00000010.0000006.000000
-Calculus 1$Zach Jackson
-Calculus 1@Exam 2
-Calculus 1@HW211.00000010.0000006.000000
-Calculus 1@HW111.00000010.0000006.000000
-Calculus 1$Denisse Ventura
-Calculus 1@Exam 2
-Calculus 1@HW211.00000010.0000006.000000
-Calculus 1@HW111.00000010.0000006.000000
-Calculus 1&HW112.000000
+Discrete Structures$Zach Jackson
 #Programming Fundamentals 2
 Programming Fundamentals 2$Zach Jackson
 Programming Fundamentals 2&HW50.000000

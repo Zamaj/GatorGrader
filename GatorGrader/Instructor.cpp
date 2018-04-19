@@ -207,9 +207,10 @@ void Instructor::findExistingStudent() {
 	cout << "Please enter your name:" << endl;
 	getline(cin, studentName);
 	ifstream file("courses.txt");
-	existStudentName = line.substr(line.find("$") + 1);
-
+	//existStudentName = line.substr(line.find("$") + 1);
+	file.seekg(0, ios::beg);
 	while (getline(file, line)) {
+		existStudentName = line.substr(line.find("$") + 1);
 		if (line.front() == '#') {
 			line.erase(line.begin());
 			courseName = line;
@@ -228,6 +229,7 @@ void Instructor::findExistingStudent() {
 		//cout << studentCourseList << endl;
 		for (std::vector<string>::const_iterator i = studentCourseList.begin(); i != studentCourseList.end(); ++i)
 			std::cout << *i << endl;
+		studentCourseList.pop_back();
 	}
 	return; 
 
