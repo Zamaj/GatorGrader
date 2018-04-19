@@ -229,5 +229,6 @@ void Instructor::findExistingStudent() {
 		for (std::vector<string>::const_iterator i = studentCourseList.begin(); i != studentCourseList.end(); ++i)
 			std::cout << *i << endl;
 	}
+	return; 
 
 }
