@@ -1,15 +1,13 @@
-#Calculus 1
-Calculus 1&HW212.000000
-Calculus 1$John Smith
-Calculus 1@HW211.00000010.0000006.000000
-Calculus 1@HW111.00000010.0000006.000000
-Calculus 1$Zach Jackson
-Calculus 1@HW211.00000010.0000006.000000
-Calculus 1@HW111.00000010.0000006.000000
-Calculus 1$Denisse Ventura
-Calculus 1@HW211.00000010.0000006.000000
-Calculus 1@HW111.00000010.0000006.000000
-Calculus 1&HW112.000000
+#Calculus 3
+#Discrete Structures
+Discrete Structures$Zach Jackson
 #Programming Fundamentals 2
+Programming Fundamentals 2$Zach Jackson
+Programming Fundamentals 2&HW50.000000
+Programming Fundamentals 2&Exam 180.000000
 Programming Fundamentals 2$Brandon Payne
+Programming Fundamentals 2@HW
+Programming Fundamentals 2@Exam 178.00000078.000000
 Programming Fundamentals 2$Zoe Frogillini
+Programming Fundamentals 2@HW
+Programming Fundamentals 2@Exam 178.00000078.000000
