@@ -13,6 +13,7 @@
 Instructor::Instructor() {
 	instructorName = "Unknown Instructor";
 	courseNum = 0;
+	ifStudent = false;
 	//Instructor *instructor = new Instructor();
 }
 
@@ -143,7 +144,8 @@ void Instructor::mainMenu() {
 	}
 }
 
-void Instructor::init() {
+bool Instructor::init() {
+	//bool ifStudent = false;
 	ifstream file("courses.txt");
 	string courseName;
 	string roleOption;
@@ -153,12 +155,14 @@ void Instructor::init() {
 
 	if (!file) {
 		firstTimeInstructor();
+		//return ifStudent;
 	}
 	else if (roleOption == "student") {
 		findExistingStudent();
-		return;
+		ifStudent = true;
+		//return ifStudent;
 	}
-	else {
+	else if (roleOption== "instructor") {
 		string foundCourseData;
 		string foundCourseName;
 		//findExistingStudent();
@@ -168,7 +172,7 @@ void Instructor::init() {
 				foundCourseData.erase(foundCourseData.begin());
 				addCourse(foundCourseData);
 				foundCourseName = foundCourseData;
-				courseName = foundCourseName;
+				//courseName = foundCourseName;
 				//findExistingStudent(courseName);
 				continue;
 			}			
@@ -191,9 +195,14 @@ void Instructor::init() {
 				currentCourse->addAssignment(foundAssignmentName, foundAssignmentPoints);
 				continue;
 			}
+			mainMenu();
+			//return ifStudent;
 		}
+		//return false;
 	}
+	return ifStudent;
 	//findExistingStudent(courseName);
+	//return ifStudent;
 }
 void Instructor::findExistingStudent() {
 	//std::vector<Course*> studentCourseList;
