@@ -34,8 +34,6 @@ public:
 	void gradeAssignment();
 	void print();
 	void courseMenu();
-	//std::vector<Student*> studentRank();
 	std::vector<Student*> studentAlphaSort();
-	//void swap(Student* a, Student* b);
 	void refresh();
 };
