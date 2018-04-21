@@ -35,4 +35,5 @@ public:
 	void print();
 	void courseMenu();
 	void refresh();
+	std::vector<Student*> studentAlphaSort();
 };
