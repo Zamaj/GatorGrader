@@ -27,7 +27,7 @@ public:
 	//std::vector<Course*> &getCourseList();
 	void firstTimeInstructor();
 	void addCourse();
-	void addCourse(std::string name);
+	void addCourse(std::string name, int credits);
 	void removeCourse();
 	void mainMenu();
 	void init();

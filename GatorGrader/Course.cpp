@@ -9,8 +9,9 @@
 #include <fstream>
 #include <sstream>
 
-Course::Course(string name) {
+Course::Course(string name, int credits) {
 	courseName = name;
+	numOfCredits = credits;
 }
 
 Course::~Course() {
@@ -187,7 +188,6 @@ void Course::gradeAssignment() {
 }
 
 void Course::save(string newItem, double numPoints, saveType addItem) {
-
 	string line;
 	ifstream file("courses.txt");
 	ofstream temp("temp.txt");
@@ -257,6 +257,10 @@ void Course::refresh() {
 void Course::print() {
 
 	cout << courseName << endl;
+
+	cout << "Credits: ";
+	cout << numOfCredits << endl;
+
 
 	cout << "Students:" << endl;
 	for (unsigned int i = 0; i < studentList.size(); i++) {

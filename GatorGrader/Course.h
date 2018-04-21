@@ -15,13 +15,14 @@ class Student;
 class Course {
 private:
 	std::string courseName;
+	int numOfCredits = 0;
 	std::vector<Student*> studentList;
 	std::vector<Assignment*> assignmentList;
 	Student* currentStudent;
 	Assignment* currentAssignment;
 public:
 	enum saveType {courseSave, studentSave, assignmentSave, masterAssignmentSave, gradeSave};
-	Course(std::string name);
+	Course(std::string name, int credits);
 	~Course();
 	void setCourseName(std::string name);
 	std::string getCourseName();

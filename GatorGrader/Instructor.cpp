@@ -42,8 +42,12 @@ void Instructor::firstTimeInstructor() {
 void Instructor::addCourse() {
 
 	string newCourseName;
-	cout << "Enter the name of a course: " << endl;
+	int numOfCredits;
+	cout << "Enter the name of a course you would like to add: " << endl;
 	getline(cin, newCourseName);
+
+	cout << "Enter the number of credits " << newCourseName << " is worth: " << endl;
+	cin >> numOfCredits;
 
 	vector<Course*>::iterator it;
 
@@ -56,15 +60,16 @@ void Instructor::addCourse() {
 		}
 	}
 
-	Course *course = new Course(newCourseName);
+	Course *course = new Course(newCourseName, numOfCredits);
 	courseList.push_back(course);
 	course->save(newCourseName, 0, Course::courseSave);
+	currentCourse = course;
 
 	cout << "Course '" << newCourseName << "' added" << endl;
 }
 
-void Instructor::addCourse(string name) {
-	Course *course = new Course(name);
+void Instructor::addCourse(string name, int credits) {
+	Course *course = new Course(name, credits);
 	courseList.push_back(course);
 	currentCourse = course;
 }
@@ -166,7 +171,20 @@ void Instructor::init() {
 
 			if (foundCourseData.front() == '#') {
 				foundCourseData.erase(foundCourseData.begin());
-				addCourse(foundCourseData);
+
+			//
+				//
+				//
+				//
+				//
+				//
+				//
+				//
+				//
+				//
+				// addCourse(foundCourseData);
+
+				addCourse(foundCourseData, 0);
 				foundCourseName = foundCourseData;
 				courseName = foundCourseName;
 				//findExistingStudent(courseName);
