@@ -258,6 +258,9 @@ void Course::print() {
 
 	cout << courseName << endl;
 
+	//Sorts Student List Alphabetically
+	studentList = studentAlphaSort();
+
 	cout << "Students:" << endl;
 	for (unsigned int i = 0; i < studentList.size(); i++) {
 		if (studentList[i] == studentList.back()) {
@@ -312,6 +315,7 @@ void Course::courseMenu() {
 }
 
 
+//Alphabetical Sorter
 std::vector<Student*> Course::studentAlphaSort() {
 	vector<Student*> alphaSort = studentList;
 	std::string a;
