@@ -5,6 +5,7 @@ using namespace std;
 
 int main()
 {	
+
 	Instructor *instructor = new Instructor();
 	
 	instructor->init();

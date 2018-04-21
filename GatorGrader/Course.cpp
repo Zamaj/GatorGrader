@@ -310,3 +310,37 @@ void Course::courseMenu() {
 		print();
 	}
 }
+
+/*std::vector<Student*> Course::studentRank() {
+	vector <Student*> studentRankedList = studentList;
+	for (int i = 0; i < studentRankedList.size()-1; i++) {
+		for (int j = 0; j < studentRankedList.size() - 1; j++) {
+			if (studentRankedList[j]->getAverageGrade > studentRankedList[j+1]->getAverageGrade) {
+				swap(studentRankedList[j], studentRankedList[j + 1]);
+			}
+		}
+	}
+	return studentRankedList;
+}*/
+
+/*void swap(Student* a, Student* b) {
+	Student* temp = a;
+	a = b;
+	b = temp;
+}*/
+
+std::vector<Student*> Course::studentAlphaSort() {
+	vector<Student*> alphaSort = studentList;
+	std::string a;
+	std::string b;
+	for (unsigned int i = 0; i < studentList.size()-1; i++) {
+		for (unsigned int j = 0; j < alphaSort.size() - i - 1; j++) {
+			a = alphaSort[j]->getLastName();
+			b = alphaSort[j + 1]->getLastName();
+			if (a[0] > b[0]) {
+				iter_swap(alphaSort.begin() + j, alphaSort.begin() + j + 1);
+			}
+		}
+	}
+	return alphaSort;
+}

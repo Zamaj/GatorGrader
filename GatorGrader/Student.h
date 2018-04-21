@@ -25,4 +25,5 @@ public:
 	void gradeStudentAssignment(std::string whichAssignment, Course* course);
 	void gradeStudentAssignment(std::string assignment, double points, Course* course);
 	double getAverageGrade();
+	//void getRank();
 };
