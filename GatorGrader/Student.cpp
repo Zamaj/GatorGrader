@@ -26,6 +26,16 @@ std::string Student::getLastName() {
 	return lastName;
 }
 
+const vector<Assignment*>& Student::getStudentAssignments()
+{
+	return assignments;
+}
+
+void Student::addStudentAssignment(string name, double pointsEarned, double pointsPossible) {
+	Assignment *assignment = new Assignment(name, pointsEarned, pointsPossible);
+	assignments.push_back(assignment);	
+}
+
 void Student::addStudentAssignment(Assignment *assignment) {
 	assignments.push_back(assignment);
 }
@@ -36,7 +46,7 @@ string Student::getFullName() {
 
 void Student::gradeStudentAssignment(string whichAssignment, Course * course) {
 	
-	for (int i = 0; i < assignments.size(); i++) {
+	for (unsigned int i = 0; i < assignments.size(); i++) {
 		if (assignments[i]->getAssignmentName() == whichAssignment) {
 			string pointsStr;
 			double points;

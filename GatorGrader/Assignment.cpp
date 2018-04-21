@@ -15,6 +15,14 @@ Assignment::Assignment(std::string name, double points) {
 	assignmentGraded = false;
 }
 
+Assignment::Assignment(string name, double pointsEarned, double pointsPossible)
+{
+	assignmentName = name;
+	possiblePoints = pointsPossible;
+	earnedPoints = pointsEarned;
+	assignmentGraded = true;
+}
+
 std::string Assignment::getAssignmentName() {
 	return assignmentName;
 }

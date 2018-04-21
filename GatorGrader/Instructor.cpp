@@ -141,26 +141,36 @@ void Instructor::mainMenu() {
 	}
 }
 
-void Instructor::init() {
+void Instructor::init() 
+{
+	string currentStudent;
+
 	ifstream file("courses.txt");
 
-	if (!file) {
+	if (!file)
+	{
 		firstTimeInstructor();
 	}
-	else {
+	else 
+	{
 		string foundCourseData;
 		string foundCourseName;
-		while (getline(file, foundCourseData)) {
 
-			if (foundCourseData.front() == '#') {
+		while (getline(file, foundCourseData))
+		{
+
+			if (foundCourseData.front() == '#') 
+			{
 				foundCourseData.erase(foundCourseData.begin());
 				addCourse(foundCourseData);
 				foundCourseName = foundCourseData;
 				continue;
-			}			
+			}
 
-			if (foundCourseData.at(foundCourseName.size()) == '$') {
+			if (foundCourseData.at(foundCourseName.size()) == '$') 
+			{
 				foundCourseData.erase(0, foundCourseName.size() + 1);
+				currentStudent = foundCourseData;
 				string foundFirstName, foundLastName;
 				istringstream studentName(foundCourseData);
 				studentName >> foundFirstName >> foundLastName;
@@ -168,7 +178,37 @@ void Instructor::init() {
 				continue;
 			}
 
-			if (foundCourseData.at(foundCourseName.size()) == '&') {
+			if (foundCourseData.at(foundCourseName.size()) == '@') {
+
+				foundCourseData.erase(0, foundCourseName.size() + 1);
+				string foundGradedAssignmentName;
+				double foundGradedAssignmentPoints;
+				double foundOriginalAssignmentPoints;
+				istringstream assignmentAttributes(foundCourseData);
+				assignmentAttributes >> foundGradedAssignmentName >> foundGradedAssignmentPoints;
+
+				for (unsigned int i = 0; i < currentCourse->getAssignmentList().size(); i++) {
+
+					if (currentCourse->getAssignmentList()[i]->getAssignmentName() == foundGradedAssignmentName) {
+						foundOriginalAssignmentPoints = currentCourse->getAssignmentList()[i]->getPossiblePoints();
+						break;
+					}
+				}
+								
+				for (unsigned int i = 0; i < currentCourse->getStudentList().size(); i++) {					
+
+					if (currentCourse->getStudentList()[i]->getFullName() == currentStudent) {
+
+
+						currentCourse->getStudentList()[i]->addStudentAssignment(foundGradedAssignmentName, foundGradedAssignmentPoints, foundOriginalAssignmentPoints);
+					}
+				}
+
+				continue;
+			}
+
+			if (foundCourseData.at(foundCourseName.size()) == '&')
+			{
 				foundCourseData.erase(0, foundCourseName.size() + 1);
 				string foundAssignmentName;
 				double foundAssignmentPoints;
@@ -177,6 +217,6 @@ void Instructor::init() {
 				currentCourse->addAssignment(foundAssignmentName, foundAssignmentPoints);
 				continue;
 			}
-		}
+		}		
 	}
 }

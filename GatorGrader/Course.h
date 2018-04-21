@@ -25,6 +25,8 @@ public:
 	~Course();
 	void setCourseName(std::string name);
 	std::string getCourseName();
+	const vector<Student*>& getStudentList();
+	const vector<Assignment*>& getAssignmentList();
 	std::string tag(saveType type);
 	void addStudent();
 	void addStudent(std::string first, std::string last, std::string full);
@@ -32,6 +34,7 @@ public:
 	void addAssignment();
 	void addAssignment(std::string name, double points);
 	void gradeAssignment();
+	void showStudentGrade();
 	void print();
 	void courseMenu();
 	void refresh();

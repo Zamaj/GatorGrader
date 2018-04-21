@@ -41,6 +41,16 @@ string Course::getCourseName() {
 	return courseName;
 }
 
+const vector<Student*>& Course::getStudentList()
+{
+	return studentList;
+}
+
+const vector<Assignment*>& Course::getAssignmentList()
+{
+	return assignmentList;
+}
+
 string Course::tag(saveType type) {
 
 	string tag;
@@ -66,7 +76,8 @@ string Course::tag(saveType type) {
 	}
 }
 
-void Course::addStudent() {
+void Course::addStudent() 
+{
 	string newStudentName;
 	string newStudentFirstName;
 	string newStudentLastName;
@@ -87,12 +98,14 @@ void Course::addStudent() {
 	cout << endl;
 }
 
-void Course::addStudent(string first, string last, string full) {
+void Course::addStudent(string first, string last, string full) 
+{
 	Student *student = new Student(first, last, full);
 	studentList.push_back(student);
 }
 
-void Course::addAssignment() {	
+void Course::addAssignment()
+{	
 
 	string newAssignmentName;
 	string newAssignmentPoints;
@@ -128,62 +141,114 @@ void Course::addAssignment(string name, double points) {
 	}
 }
 
-void Course::gradeAssignment() {
-
+void Course::gradeAssignment() 
+{
 	string whichAssignment;
+
 	cout << "Which assignment would you like to grade?";
 
 	getline(cin, whichAssignment);
 
 	string oneOrAll;
+
 	cout << "Would you like to grade an assignment for a single student or all students?" << endl;
 	cout << "1. Single student" << endl;
 	cout << "2. All students" << endl;
 
 	getline(cin, oneOrAll);
 
-	if (oneOrAll == "1") {
+	if (oneOrAll == "1") 
+	{
 		string whichStudent;
+
 		cout << "Which student would you like to grade?" << endl;
+
 		getline(cin, whichStudent);
 		
 		bool studentFound = false;
-		for (unsigned int i = 0; i < studentList.size(); i++) {
-			if (studentList[i]->getFullName() == whichStudent) {
+
+		for (unsigned int i = 0; i < studentList.size(); i++)
+		{
+			if (studentList[i]->getFullName() == whichStudent)
+			{
 				studentList[i]->gradeStudentAssignment(whichAssignment, this);
 				studentFound = true;
 				break;
 			}
 		}
 
-		if (studentFound == false) {
+		if (studentFound == false) 
+		{
 			cout << "You have no student '" << whichStudent << "'" << endl;
 			return;
 		}		
 	}
 
-	if (oneOrAll == "2") {
+	if (oneOrAll == "2") 
+	{
 		cout << "Enter the grade for each student:" << endl;
 		cout << "(If you wish to exit grading process grading at any point, just enter 'c')" << endl;
 
-		for (unsigned int i = 0; i < studentList.size(); i++) {
+		for (unsigned int i = 0; i < studentList.size(); i++) 
+		{
 			string grade;
 			double points;
+
 			cout << studentList[i]->getFullName() << ": " << endl;
 			getline(cin, grade);
 
-			if (grade == "c") {
+			if (grade == "c") 
+			{
 				return;
 			}
 
 			points = atof(grade.c_str());
 
 			studentList[i]->gradeStudentAssignment(whichAssignment, points, this);
-		}
-		
+		}		
 	}
 
 	cout << "Which assignment would you like to grade?";
+}
+
+void Course::showStudentGrade()
+{
+	string studentName;
+
+	cout << "Enter the name of the student:" << endl;
+
+	getline(cin, studentName);
+
+	bool studentFound = false;
+
+	for (unsigned int i = 0; i < studentList.size(); i++)
+	{
+		if (studentList[i]->getFullName() == studentName)
+		{
+			currentStudent = studentList[i];
+			studentFound = true;
+			break;
+		}
+	}
+
+	if (studentFound == false)
+	{
+		cout << "No such student" << endl;
+		return;
+	}
+
+	string assignmentName;
+
+	cout << "Enter the name of the assignment:" << endl;
+
+	getline(cin, assignmentName);
+
+	for (unsigned int i = 0; i < currentStudent->getStudentAssignments().size(); i++) {
+		if (currentStudent->getStudentAssignments()[i]->getAssignmentName() == assignmentName) {
+			cout << studentName << ": " << currentStudent->getStudentAssignments()[i]->getEarnedPoints() << "/" << currentStudent->getStudentAssignments()[i]->getPossiblePoints() << endl;
+			return;
+		}
+	}
 }
 
 void Course::save(string studentName, string newItem, double numPoints, saveType addItem) {
@@ -288,7 +353,8 @@ void Course::print() {
 	cout << endl;
 }
 
-void Course::courseMenu() {
+void Course::courseMenu()
+{
 
 	string menuChoice;
 
@@ -296,23 +362,33 @@ void Course::courseMenu() {
 	cout << "1. Grade Assignment" << endl;
 	cout << "2. New assignment" << endl;
 	cout << "3. Add student(s)" << endl;
-	cout << "4. Print course" << endl;
+	cout << "4. View scores for student" << endl;
+	cout << "5. Print course" << endl;
 
 	getline(cin, menuChoice);
 
-	if (menuChoice == "1") {
+	if (menuChoice == "1") 
+	{
 		gradeAssignment();
 	}
 
-	if (menuChoice == "2") {
+	if (menuChoice == "2")
+	{
 		addAssignment();
 	}
 
-	if (menuChoice == "3") {
+	if (menuChoice == "3") 
+	{
 		addStudent();
 	}
 
-	if (menuChoice == "4") {
+	if (menuChoice == "4")
+	{
+		showStudentGrade();
+	}
+
+	if (menuChoice == "5") 
+	{
 		print();
 	}
 }

@@ -15,6 +15,7 @@ private:
 	bool assignmentGraded;
 public:
 	Assignment(std::string name, double points);
+	Assignment(string name, double pointsEarned, double pointsPossible);
 	void setAssignmentName(std::string name);
 	std::string getAssignmentName();
 	void setPossiblePoints(double points);
