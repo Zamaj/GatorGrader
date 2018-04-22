@@ -27,7 +27,6 @@ public:
 	std::string getName();
 	int courseNum; 
 	bool ifStudent;
-	
 	void firstTimeInstructor();
 	void addCourse();
 	void addCourse(std::string name);
