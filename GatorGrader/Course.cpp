@@ -9,21 +9,16 @@
 #include <fstream>
 #include <sstream>
 
-//constructor
 Course::Course(string name) {
 	courseName = name;
 }
 
-//deconstructor
 Course::~Course() {
-
 	string line;
 
-	//object of type ifstream created called file
 	ifstream file("courses.txt");
 	ofstream temp("temp.txt");
 	
-	//while loop to read in file, line by line
 	while (getline(file, line)) {
 
 		if (!(line.substr(1, line.back()) == courseName || line.substr(0, courseName.size()) == courseName)) {
@@ -38,12 +33,10 @@ Course::~Course() {
 	rename("temp.txt", "courses.txt");
 }
 
-//mutator method to set name of course
 void Course::setCourseName(string name) {
 	courseName = name;
 }
 
-//accessor method to return name of course
 string Course::getCourseName() {
 	return courseName;
 }
@@ -61,35 +54,30 @@ const vector<Assignment*>& Course::getAssignmentList()
 string Course::tag(saveType type) {
 
 	string tag;
-	
-	//# denotes a course in the text file
+
 	if (type == courseSave) {
 		tag = "#";
 		return tag;
 	}
 
-	//$ denotes a student in the text file
 	if (type == studentSave) {
 		tag = getCourseName().append("$");
 		return 	tag;
 	}
 
-	//@ denotes assignment in text file
 	if (type == assignmentSave) {
 		tag = getCourseName().append("@");
 		return tag;
 	}
 
-	//& denotes assignment in text file
 	if (type = masterAssignmentSave) {
 		tag = getCourseName().append("&");
 		return tag;
 	}
 }
 
-//method to add a student
-void Course::addStudent() {
-
+void Course::addStudent() 
+{
 	string newStudentName;
 	string newStudentFirstName;
 	string newStudentLastName;
@@ -110,16 +98,14 @@ void Course::addStudent() {
 	cout << endl;
 }
 
-//overloaded method to add a student
-Student* Course::addStudent(string first, string last, string full) {
-
+void Course::addStudent(string first, string last, string full) 
+{
 	Student *student = new Student(first, last, full);
-	studentList.push_back(student);	
-	return student;
+	studentList.push_back(student);
 }
 
-//method to add an assignment
-void Course::addAssignment() {	
+void Course::addAssignment()
+{	
 
 	string newAssignmentName;
 	string newAssignmentPoints;
@@ -134,7 +120,6 @@ void Course::addAssignment() {
 	points = atof(newAssignmentPoints.c_str());
 
 	Assignment *assignment = new Assignment(newAssignmentName, points);
-	//adds assignment to vector assignmentList
 	assignmentList.push_back(assignment);
 
 	for (unsigned int i = 0; i < studentList.size(); i++) {
@@ -147,12 +132,8 @@ void Course::addAssignment() {
 	cout << "Assignment '" << newAssignmentName << "' worth " << points << " points has been added to course " << courseName << endl;
 }
 
-//overloaded method to add assignment
 void Course::addAssignment(string name, double points) {
-
 	Assignment *assignment = new Assignment(name, points);
-
-	//adds assignment to vector assignmentList
 	assignmentList.push_back(assignment);
 
 	for (unsigned int i = 0; i < studentList.size(); i++) {
@@ -160,9 +141,8 @@ void Course::addAssignment(string name, double points) {
 	}
 }
 
-//method to grade assignment
-void Course::gradeAssignment() {
-
+void Course::gradeAssignment() 
+{
 	string whichAssignment;
 
 	cout << "Which assignment would you like to grade?";
@@ -177,8 +157,8 @@ void Course::gradeAssignment() {
 
 	getline(cin, oneOrAll);
 
-	//grades a single student's assignment
-	if (oneOrAll == "1") {
+	if (oneOrAll == "1") 
+	{
 		string whichStudent;
 
 		cout << "Which student would you like to grade?" << endl;
@@ -186,23 +166,24 @@ void Course::gradeAssignment() {
 		getline(cin, whichStudent);
 		
 		bool studentFound = false;
-		//searches for student
-		for (unsigned int i = 0; i < studentList.size(); i++) {
-			if (studentList[i]->getFullName() == whichStudent) {
+
+		for (unsigned int i = 0; i < studentList.size(); i++)
+		{
+			if (studentList[i]->getFullName() == whichStudent)
+			{
 				studentList[i]->gradeStudentAssignment(whichAssignment, this);
 				studentFound = true;
 				break;
 			}
 		}
 
-		//student doesn't exist
-		if (studentFound == false) {
+		if (studentFound == false) 
+		{
 			cout << "You have no student '" << whichStudent << "'" << endl;
 			return;
 		}		
 	}
 
-	//grade all students
 	if (oneOrAll == "2") 
 	{
 		cout << "Enter the grade for each student:" << endl;
@@ -341,19 +322,13 @@ void Course::save(string studentName, string newItem, double numPoints, saveType
 
 //adds all of the assignments in a course to each student
 void Course::refresh() {
-
 	studentList.front()->addStudentAssignment(assignmentList.front());
 }
 
-//method to print course information
 void Course::print() {
 
 	cout << courseName << endl;
 
-	//Sorts list Alphabetically
-	studentList = studentAlphaSort();
-
-	//prints all students in course
 	cout << "Students:" << endl;
 	for (unsigned int i = 0; i < studentList.size(); i++) {
 		if (studentList[i] == studentList.back()) {
@@ -365,7 +340,6 @@ void Course::print() {
 		}
 	}	
 
-	//prints all existing assignments in course
 	cout << "Assignments:" << endl;
 	for (unsigned int i = 0; i < assignmentList.size(); i++) {
 		if (assignmentList[i] == assignmentList.back()) {
@@ -379,8 +353,8 @@ void Course::print() {
 	cout << endl;
 }
 
-//method for instructor to choose how to manage course
-void Course::courseMenu() {
+void Course::courseMenu()
+{
 
 	string menuChoice;
 
@@ -417,34 +391,4 @@ void Course::courseMenu() {
 	{
 		print();
 	}
-}
-
-//Alphabetical Sorter
-std::vector<Student*> Course::studentAlphaSort() {
-
-	vector<Student*> alphaSort = studentList;
-	std::string a;
-	std::string b;
-	//sorts students alphabetically by last name
-	for (unsigned int i = 0; i < studentList.size() - 1; i++) {
-		for (unsigned int j = 0; j < alphaSort.size() - i - 1; j++) {
-			a = alphaSort[j]->getLastName();
-			b = alphaSort[j + 1]->getLastName();
-
-			//for loop to go through next character if previous characters were the same
-			for (unsigned int k = 0; k < a.size(); k++) {
-				if (a[k] > b[k]) {
-					iter_swap(alphaSort.begin() + j, alphaSort.begin() + j + 1);
-				}
-				else if (a[k] == b[k]) {
-					continue;
-				}
-				else {
-					break;
-				}
-			}
-
-		}
-	}
-	return alphaSort;
 }
