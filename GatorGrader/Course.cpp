@@ -111,7 +111,7 @@ void Course::addStudent() {
 }
 
 //overloaded method to add a student
-Student* Course::addStudent(string first, string last, string full) {
+void Course::addStudent(string first, string last, string full) {
 
 	Student *student = new Student(first, last, full);
 	studentList.push_back(student);	
@@ -202,6 +202,8 @@ void Course::gradeAssignment() {
 		}		
 	}
 
+	//grade all students
+	if (oneOrAll == "2") {
 	//grade all students
 	if (oneOrAll == "2") 
 	{
