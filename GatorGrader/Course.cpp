@@ -423,3 +423,55 @@ std::vector<Student*> Course::studentAlphaSort() {
 	}
 	return alphaSort;
 }
+
+
+//Test with Average Grade for each student
+void Course::printStudentRank() {
+	vector<Student*> rankSort = studentList;
+	double a;
+	double b;
+	for (unsigned int i = 0; i < studentList.size() - 1; i++) {
+		for (unsigned int j = 0; j < rankSort.size() - i - 1; j++) {
+			a = rankSort[j]->getAverageGrade();
+			b = rankSort[j + 1]->getAverageGrade();
+			if (a < b) {
+				iter_swap(rankSort.begin() + j, rankSort.begin() + j + 1);
+			}
+
+		}
+	}
+
+	cout << "Student Rank:" << endl;
+	int rank = 1;
+	
+	
+	for (unsigned int i = 0; i < rankSort.size(); i++) {
+		if (i = 0) {
+			cout << "1. ";
+			if (rankSort[i] == rankSort.back()) {
+				cout << rankSort[i]->getFirstName() << " " << rankSort[i]->getLastName() << endl;
+
+			}
+			else {
+				cout << rankSort[i]->getFirstName() << " " << rankSort[i]->getLastName() << ", ";
+			}
+		}
+		else {
+			a = rankSort[i - 1]->getAverageGrade();
+			b = rankSort[i]->getAverageGrade();
+			if (a > b) {
+				rank++;
+			}
+			cout << rank << ". ";
+			if (rankSort[i] == rankSort.back()) {
+				cout << rankSort[i]->getFirstName() << " " << rankSort[i]->getLastName() << endl;
+
+			}
+			else {
+				cout << rankSort[i]->getFirstName() << " " << rankSort[i]->getLastName() << ", ";
+			}
+		}
+		
+	}
+
+}
