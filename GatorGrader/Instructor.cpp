@@ -49,7 +49,7 @@ string Instructor::getName() {
 //	return courseList;
 //}
 
-//method for when instructor is new, and has no courses 
+//method for when instructor is new, and has no courses
 void Instructor::firstTimeInstructor() {
 
 	cout << "Welcome to GatorGrader. Please enter your name:" << endl;
@@ -112,8 +112,8 @@ void Instructor::removeCourse() {
 	//returns if user does not want to delete course
 	if (confirmChoice != "1") {
 		return;
-	}		
-	
+	}
+
 	vector<Course*>::iterator it;
 	for (it = courseList.begin(); it != courseList.end();) {
 		if ((*it)->getCourseName() == removeName) {
@@ -171,7 +171,7 @@ void Instructor::mainMenu() {
 			if (courseFound == false) {
 				cout << "You have no course '" << courseChoice << "'." << endl;
 			}
-		}		
+		}
 	}
 }
 
@@ -183,7 +183,7 @@ bool Instructor::init() {
 	string roleOption;
 
 	//user chooses if they are a student or instructor
-	cout << "Welcome to Gator Grader. Please enter if you are a student or instructor" << endl;
+	cout << "Welcome to Gator Grader. Please enter if you are a student or instructor." << endl;
 	getline(cin, roleOption);
 	cout << endl;
 
@@ -279,17 +279,17 @@ bool Instructor::init() {
 }
 
 
-//method to find student, when student enters their name. Then finds all of the courses that 
+//method to find student, when student enters their name. Then finds all of the courses that
 //specific student is in and prints them out
 void Instructor::findExistingStudent() {
-	
+
 	vector <string> studentCourseList;
 	string courseName;
 	string line;
 	//name you are looking for
-	string studentName; 
+	string studentName;
 	//student that already exists
-	string existStudentName; 
+	string existStudentName;
 
 	cout << "Please enter your name:" << endl;
 	getline(cin, studentName);
@@ -317,7 +317,7 @@ void Instructor::findExistingStudent() {
 		//adds course name to vector studentCourseList
 			studentCourseList.push_back(courseName);
 		}
-	
+
 	}
 
 	cout << "Hello " << studentName << "!"<< endl;
@@ -329,7 +329,7 @@ void Instructor::findExistingStudent() {
 			std::cout << *i << endl;
 		studentCourseList.pop_back();
 	}
-	return; 
+	return;
 
 }
 
@@ -372,3 +372,127 @@ void Instructor::setGradingScale() {
 
 
 }
+
+
+
+void Instructor::visualizeCourse(){
+
+	// method to visualize course grades by creating a histogram
+	// with the following predefinited categories (inclusive) based on percentage points
+	// calculated with the same method of earned points divided by possible points:
+	// A: 90+
+	// B: 80-89
+	// C: 70-79
+	// D: 60-69
+	// F: 0-59
+
+	// stores the insructor's chosen course to visualize
+	string courseGraphSelection;
+
+	cout << "Enter the name of a course you would like to visualize grades for:" << endl;
+	getline(cin, courseGraphSelection);
+
+	bool courseGraphSelectionFound = false;
+
+	int a = 0;
+
+	// loops through course list to check for valid course input
+	while(courseGraphSelectionFound == false) {
+		if(courseList.at(a) == courseGraphSelection) {
+			courseGraphSelectionFound = true;
+		}
+		else {
+			a++;
+		}
+		if(a > courseList.size()){
+			cout << "You have no course '" << courseGraphSelection << "'." << endl;
+			cout << "Please try again."<< endl;
+			break;
+		}
+	}
+
+	// initialize frequency counters
+	int acount = 0;
+	int bcount = 0;
+	int ccount = 0;
+	int dcount = 0;
+	int fcount = 0;
+
+	int gradeNumber;
+
+	for (int i = 0; i<course.studentList.size(); i++){
+		int studentAverageGrade = student.getAverageGrade();
+
+		// sets switch input
+		if(studentAverageGrade >= 90){
+			gradeNumber = 1;
+		}
+
+		if(studentAverageGrade >= 80 && studentAverageGrade < 90){
+			gradeNumber = 2;
+		}
+
+		if(studentAverageGrade >= 70 && studentAverageGrade < 80){
+			gradeNumber = 3;
+		}
+
+		if(studentAverageGrade >= 60 && studentAverageGrade < 70){
+			gradeNumber = 4;
+		}
+
+		if(studentAverageGrade < 60){
+			gradeNumber = 5;
+		}
+
+		// switch statement to increment appropriate counter
+
+		switch (gradeNumber){
+			case 1:
+				acount++;
+			case 2:
+				bcount++;
+			case 3:
+				ccount++;
+			case 4:
+				dcount++;
+			case 5:
+				fcount++;
+
+		}
+	}
+
+	// frequency symbol used in histogram
+	string frequencySymbol = " [*] ";
+
+	// creates historgram, category by category
+
+	for (int ac = 0; ac<acount; ac++){
+		cout << frequencyCounter;
+	}
+	cout << endl;
+
+	for (int bc = 0; bc<bcount; bc++){
+		cout << frequencyCounter;
+	}
+	cout << endl;
+
+	for (int cc = 0; cc<ccount; cc++){
+		cout << frequencyCounter;
+	}
+	cout << endl;
+
+	for (int dc = 0; dc<dcount; dc++){
+		cout << frequencyCounter;
+	}
+	cout << endl;
+
+	for (int fc = 0; fc<fcount; fc++){
+		cout << frequencyCounter;
+	}
+
+}
+
+
+
+
+*/
