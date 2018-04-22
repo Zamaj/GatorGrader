@@ -328,6 +328,9 @@ void Course::refresh() {
 void Course::print() {
 
 	cout << courseName << endl;
+	
+	//Alphabetical Order
+	studentList = studentAlphaSort();
 
 	cout << "Students:" << endl;
 	for (unsigned int i = 0; i < studentList.size(); i++) {
@@ -391,4 +394,31 @@ void Course::courseMenu()
 	{
 		print();
 	}
+}
+
+
+//Alphabetical Sorter
+std::vector<Student*> Course::studentAlphaSort() {
+	vector<Student*> alphaSort = studentList;
+	std::string a;
+	std::string b;
+	for (unsigned int i = 0; i < studentList.size() - 1; i++) {
+		for (unsigned int j = 0; j < alphaSort.size() - i - 1; j++) {
+			a = alphaSort[j]->getLastName();
+			b = alphaSort[j + 1]->getLastName();
+			for (unsigned int k = 0; k < a.size(); k++) {
+				if (a[k] > b[k]) {
+					iter_swap(alphaSort.begin() + j, alphaSort.begin() + j + 1);
+				}
+				else if (a[k] == b[k]) {
+					continue;
+				}
+				else {
+					break;
+				}
+			}
+
+		}
+	}
+	return alphaSort;
 }

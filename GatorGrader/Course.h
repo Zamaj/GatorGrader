@@ -38,4 +38,5 @@ public:
 	void print();
 	void courseMenu();
 	void refresh();
+	vector <Student*> studentAlphaSort();
 };
