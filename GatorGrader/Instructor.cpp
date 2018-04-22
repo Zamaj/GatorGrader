@@ -10,6 +10,7 @@
 #include <sstream>
 #include <algorithm>
 
+//constructor
 Instructor::Instructor() {
 	instructorName = "Unknown Instructor";
 	courseNum = 0;
@@ -17,14 +18,17 @@ Instructor::Instructor() {
 	//Instructor *instructor = new Instructor();
 }
 
+//constructor
 Instructor::Instructor(string name) {
 	this->instructorName = name;
 }
 
+//mutator method to set name of instructor
 void Instructor::setName(string name) {
 	this->instructorName = name;
 }
 
+//accessor method to get name of instructor
 string Instructor::getName() {
 	return instructorName;
 }
@@ -33,6 +37,7 @@ string Instructor::getName() {
 //	return courseList;
 //}
 
+//method for when instructor is new, and has no courses 
 void Instructor::firstTimeInstructor() {
 	cout << "Welcome to GatorGrader. Please enter your name:" << endl;
 	getline(cin, instructorName);
@@ -40,6 +45,7 @@ void Instructor::firstTimeInstructor() {
 	addCourse();
 }
 
+//method to add a course
 void Instructor::addCourse() {
 
 	string newCourseName;
@@ -48,6 +54,7 @@ void Instructor::addCourse() {
 
 	vector<Course*>::iterator it;
 
+	//checks to see if course already exists
 	for (it = courseList.begin(); it != courseList.end(); it++) {
 		string temp = (*it)->getCourseName();
 
@@ -58,18 +65,21 @@ void Instructor::addCourse() {
 	}
 
 	Course *course = new Course(newCourseName);
+	//adds course to vector courseList
 	courseList.push_back(course);
 	course->save(newCourseName, 0, Course::courseSave);
 
 	cout << "Course '" << newCourseName << "' added" << endl;
 }
 
+//overloaded method to add a course
 void Instructor::addCourse(string name) {
 	Course *course = new Course(name);
 	courseList.push_back(course);
 	currentCourse = course;
 }
 
+//method to remove a course
 void Instructor::removeCourse() {
 	string removeName;
 	cout << "Enter the name of the course you would like to delete:" << endl;
@@ -77,13 +87,14 @@ void Instructor::removeCourse() {
 
 	string confirmChoice;
 
-	
+
 	cout << "Are you sure you would like to delete '" << removeName << "' and all of its data?" << endl;
 	cout << "1. Yes" << endl;
 	cout << "2. No" << endl;
 
 	getline(cin, confirmChoice);
 
+	//returns if user does not want to delete course
 	if (confirmChoice != "1") {
 		return;
 	}		
@@ -102,8 +113,10 @@ void Instructor::removeCourse() {
 	cout << "Course '" << removeName << "' has been removed" << endl;
 }
 
+//main menu for instructor
 void Instructor::mainMenu() {
 
+	//lists the courses the instructor currently has
 	cout << "Your Courses:" << endl;
 	for (unsigned int i = 0; i < courseList.size(); i++) {
 		cout << courseList[i]->getCourseName() << endl;
@@ -112,6 +125,7 @@ void Instructor::mainMenu() {
 	string courseChoice;
 
 	while (true) {
+		//instructor can add and remove courses or manage a course by typing in its name
 		cout << "Enter a course name to view options for that course or choose an option below:" << endl;
 		cout << "1. Add course" << endl;
 		cout << "2. Remove course" << endl;
@@ -137,6 +151,7 @@ void Instructor::mainMenu() {
 				}
 			}
 
+			//checks if instructor has the entered course
 			if (courseFound == false) {
 				cout << "You have no course '" << courseChoice << "'." << endl;
 			}
@@ -144,39 +159,47 @@ void Instructor::mainMenu() {
 	}
 }
 
+//method that distinguishes between students and instructors
 bool Instructor::init() {
-	//bool ifStudent = false;
+	
 	ifstream file("courses.txt");
 	string courseName;
 	string roleOption;
+
+	//user chooses if they are a student or instructor
 	cout << "Welcome to Gator Grader. Please enter if you are a student or instructor" << endl;
 	getline(cin, roleOption);
 	cout << endl;
 
+	//if file doesnt exist, then instructor is new and doesnt have any courses
 	if (!file) {
 		firstTimeInstructor();
-		//return ifStudent;
 	}
+
+	//if user is a student, calls method findExistingStudent()
 	else if (roleOption == "student") {
 		findExistingStudent();
+		//sets bool variable ifStudent to true, which will be returned
 		ifStudent = true;
-		//return ifStudent;
 	}
+
+	//if user is an instructor
 	else if (roleOption== "instructor") {
 		string foundCourseData;
 		string foundCourseName;
-		//findExistingStudent();
+		
+		//reads file line by line, storing each line in string variable foundCourseData
 		while (getline(file, foundCourseData)) {
 
+			//finds courses
 			if (foundCourseData.front() == '#') {
 				foundCourseData.erase(foundCourseData.begin());
 				addCourse(foundCourseData);
 				foundCourseName = foundCourseData;
-				//courseName = foundCourseName;
-				//findExistingStudent(courseName);
 				continue;
 			}			
 
+			//finds students
 			if (foundCourseData.at(foundCourseName.size()) == '$') {
 				foundCourseData.erase(0, foundCourseName.size() + 1);
 				string foundFirstName, foundLastName;
@@ -186,6 +209,7 @@ bool Instructor::init() {
 				continue;
 			}
 
+			//finds assignments
 			if (foundCourseData.at(foundCourseName.size()) == '&') {
 				foundCourseData.erase(0, foundCourseName.size() + 1);
 				string foundAssignmentName;
@@ -195,47 +219,63 @@ bool Instructor::init() {
 				currentCourse->addAssignment(foundAssignmentName, foundAssignmentPoints);
 				continue;
 			}
+			//calls method mainMenu(), since user is an instructor
 			mainMenu();
-			//return ifStudent;
+			
 		}
-		//return false;
+		
 	}
+
 	return ifStudent;
-	//findExistingStudent(courseName);
-	//return ifStudent;
+	
 }
+
+//method to find student, when student enters their name. Then finds all of the courses that 
+//specific student is in and prints them out
 void Instructor::findExistingStudent() {
-	//std::vector<Course*> studentCourseList;
-	//Instructor *studentCourse = new Instructor(courseName);
+	
 	vector <string> studentCourseList;
 	string courseName;
-	//char courseList[20];
 	string line;
-	string studentName; //name you are looking for
-	string existStudentName; //student that already exists
+	//name you are looking for
+	string studentName; 
+	//student that already exists
+	string existStudentName; 
+
 	cout << "Please enter your name:" << endl;
 	getline(cin, studentName);
+
 	ifstream file("courses.txt");
-	//existStudentName = line.substr(line.find("$") + 1);
+	//goes to beginning of file
 	file.seekg(0, ios::beg);
+
+	//while loop to read file, line by line
 	while (getline(file, line)) {
+
+		//finds students, noted by $
 		existStudentName = line.substr(line.find("$") + 1);
+
+		//finds courses, denoted by #
 		if (line.front() == '#') {
+			//gets rid of #, so that line only contains the course name
 			line.erase(line.begin());
+			//courseName set to the course name
 			courseName = line;
 		}
+
+		//checks if found student in file matches the student name entered
 		if (studentName == existStudentName) {
-			//courseList[courseNum] = courseName;
+		//adds course name to vector studentCourseList
 			studentCourseList.push_back(courseName);
-			//studentCourse->save(courseName);
 		}
 	
-
 	}
+
 	cout << "Hello " << studentName << "!"<< endl;
 	cout << "Your courses:" << endl;
+
+	//while loop to print out vector studentCourseList
 	while (!studentCourseList.empty()) {
-		//cout << studentCourseList << endl;
 		for (std::vector<string>::const_iterator i = studentCourseList.begin(); i != studentCourseList.end(); ++i)
 			std::cout << *i << endl;
 		studentCourseList.pop_back();

@@ -21,6 +21,8 @@ public:
 	std::string getFirstName();
 	std::string getLastName();
 	std::string getFullName();
+
+	//class methods
 	void addStudentAssignment(Assignment *assignment);
 	void gradeStudentAssignment(std::string whichAssignment, Course* course);
 	void gradeStudentAssignment(std::string assignment, double points, Course* course);

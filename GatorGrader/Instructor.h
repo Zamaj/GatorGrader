@@ -26,6 +26,7 @@ public:
 	int courseNum; 
 	bool ifStudent;
 	//std::vector<Course*> &getCourseList();
+	
 	void firstTimeInstructor();
 	void addCourse();
 	void addCourse(std::string name);
