@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "Instructor.h"
-#include "Assignment.h"
 #include "Student.h"
+#include "Assignment.h"
 #include "Course.h"
+#include "Instructor.h"
 #include <string>
 #include <vector>
 #include <fstream>
@@ -16,6 +16,18 @@ Instructor::Instructor() {
 	courseNum = 0;
 	ifStudent = false;
 	//Instructor *instructor = new Instructor();
+	gradeA = 0.0;
+	gradeAMinus = 0.0;
+	gradeBPlus = 0.0;
+	gradeB = 0.0;
+	gradeBMinus = 0.0;
+	gradeCPlus = 0.0;
+	gradeC = 0.0;
+	gradeCMinus = 0.0;
+	gradeDPlus = 0.0;
+	gradeD = 0.0;
+	gradeDMinus = 0.0;
+
 }
 
 //constructor
@@ -139,6 +151,7 @@ void Instructor::mainMenu() {
 
 		if (courseChoice == "1" || courseChoice == "Add course" || courseChoice == "add course" || courseChoice == "Add Course") {
 			addCourse();
+			//setGradingScale();
 		}
 
 		else if (courseChoice == "2" || courseChoice == "Remove course" || courseChoice == "remove course" || courseChoice == "Remove Course") {
@@ -164,7 +177,7 @@ void Instructor::mainMenu() {
 
 //method that distinguishes between students and instructors
 bool Instructor::init() {
-	
+
 	ifstream file("courses.txt");
 	string courseName;
 	string roleOption;
@@ -187,10 +200,11 @@ bool Instructor::init() {
 	}
 
 	//if user is an instructor
-	else if (roleOption== "instructor") {
+	else if (roleOption == "instructor") {
 		string foundCourseData;
 		string foundCourseName;
-		
+		string currentStudent;
+
 		//reads file line by line, storing each line in string variable foundCourseData
 		while (getline(file, foundCourseData)) {
 
@@ -229,8 +243,8 @@ bool Instructor::init() {
 						break;
 					}
 				}
-								
-				for (unsigned int i = 0; i < currentCourse->getStudentList().size(); i++) {					
+
+				for (unsigned int i = 0; i < currentCourse->getStudentList().size(); i++) {
 
 					if (currentCourse->getStudentList()[i]->getFullName() == currentStudent) {
 
@@ -244,26 +258,26 @@ bool Instructor::init() {
 
 			if (foundCourseData.at(foundCourseName.size()) == '&')
 			{
-			//finds assignments
-			if (foundCourseData.at(foundCourseName.size()) == '&') {
-				foundCourseData.erase(0, foundCourseName.size() + 1);
-				string foundAssignmentName;
-				double foundAssignmentPoints;
-				istringstream assignmentAttributes(foundCourseData);
-				assignmentAttributes >> foundAssignmentName >> foundAssignmentPoints;
-				currentCourse->addAssignment(foundAssignmentName, foundAssignmentPoints);
-				continue;
+				//finds assignments
+				if (foundCourseData.at(foundCourseName.size()) == '&') {
+					foundCourseData.erase(0, foundCourseName.size() + 1);
+					string foundAssignmentName;
+					double foundAssignmentPoints;
+					istringstream assignmentAttributes(foundCourseData);
+					assignmentAttributes >> foundAssignmentName >> foundAssignmentPoints;
+					currentCourse->addAssignment(foundAssignmentName, foundAssignmentPoints);
+					continue;
+				}
 			}
-			//calls method mainMenu(), since user is an instructor
-			mainMenu();
-			
-		}
-		
-	}
 
+		}
+		//calls method mainMenu(), since user is an instructor
+		mainMenu();
+
+	}
 	return ifStudent;
-	
 }
+
 
 //method to find student, when student enters their name. Then finds all of the courses that 
 //specific student is in and prints them out
@@ -316,5 +330,45 @@ void Instructor::findExistingStudent() {
 		studentCourseList.pop_back();
 	}
 	return; 
+
+}
+
+void Instructor::setGradingScale() {
+
+	cout << "Set grading scale for course" << endl;
+
+	cout << "What is the cut-off for an A?" << endl;
+	cin >> gradeA;
+
+	cout << "What is the cut-off for an A-?" << endl;
+	cin >> gradeAMinus;
+
+	cout << "What is the cut-off for a B+?" << endl;
+	cin >> gradeBPlus;
+
+	cout << "What is the cut-off for a B?" << endl;
+	cin >> gradeB;
+
+	cout << "What is the cut-off for a B-?" << endl;
+	cin >> gradeBMinus;
+
+	cout << "What is the cut-off for a C+?" << endl;
+	cin >> gradeCPlus;
+
+	cout << "What is the cut-off for an C?" << endl;
+	cin >> gradeC;
+
+	cout << "What is the cut-off for an C-?" << endl;
+	cin >> gradeCMinus;
+
+	cout << "What is the cut-off for a D+?" << endl;
+	cin >> gradeDPlus;
+
+	cout << "What is the cut-off for a D?" << endl;
+	cin >> gradeD;
+
+	cout << "What is the cut-off for a D-?" << endl;
+	cin >> gradeDMinus;
+
 
 }

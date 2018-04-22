@@ -103,6 +103,7 @@ void Course::addStudent() {
 	Student *student = new Student(newStudentFirstName, newStudentLastName, newStudentName);
 	studentList.push_back(student);
 
+
 	save("", newStudentName, 0, studentSave);	
 
 	cout << "Student '" << newStudentFirstName << " " << newStudentLastName << "' added to course " << courseName << endl;

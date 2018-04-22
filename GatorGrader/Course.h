@@ -23,7 +23,7 @@ public:
 	enum saveType {courseSave, studentSave, assignmentSave, masterAssignmentSave, gradeSave};
 	Course(std::string name);
 	~Course();
-
+	
 	void setCourseName(std::string name);
 	std::string getCourseName();
 	const vector<Student*>& getStudentList();
