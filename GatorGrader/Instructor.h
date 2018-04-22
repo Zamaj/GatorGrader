@@ -23,6 +23,7 @@ public:
 	Instructor(std::string name);	
 	void setName(std::string name);
 	std::string getName();
+	int courseNum; 
 	//std::vector<Course*> &getCourseList();
 	void firstTimeInstructor();
 	void addCourse();
@@ -30,4 +31,5 @@ public:
 	void removeCourse();
 	void mainMenu();
 	void init();
+	void findExistingStudent();
 };

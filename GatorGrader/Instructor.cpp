@@ -11,7 +11,9 @@
 #include <algorithm>
 
 Instructor::Instructor() {
-	instructorName = "Unkown Instructor";
+	instructorName = "Unknown Instructor";
+	courseNum = 0;
+	//Instructor *instructor = new Instructor();
 }
 
 Instructor::Instructor(string name) {
@@ -146,24 +148,33 @@ void Instructor::init()
 	string currentStudent;
 
 	ifstream file("courses.txt");
+	string courseName;
+	string roleOption;
+	cout << "Welcome to Gator Grader. Please enter if you are a student or instructor" << endl;
+	getline(cin, roleOption);
+	cout << endl;
 
 	if (!file)
 	{
 		firstTimeInstructor();
 	}
-	else 
-	{
+	else if (roleOption == "student") {
+		findExistingStudent();
+		return;
+	}
+	else {
 		string foundCourseData;
 		string foundCourseName;
-
-		while (getline(file, foundCourseData))
-		{
+		//findExistingStudent();
+		while (getline(file, foundCourseData)) {
 
 			if (foundCourseData.front() == '#') 
 			{
 				foundCourseData.erase(foundCourseData.begin());
 				addCourse(foundCourseData);
 				foundCourseName = foundCourseData;
+				courseName = foundCourseName;
+				//findExistingStudent(courseName);
 				continue;
 			}
 
@@ -217,6 +228,46 @@ void Instructor::init()
 				currentCourse->addAssignment(foundAssignmentName, foundAssignmentPoints);
 				continue;
 			}
-		}		
+		}
 	}
+	//findExistingStudent(courseName);
+}
+void Instructor::findExistingStudent() {
+	//std::vector<Course*> studentCourseList;
+	//Instructor *studentCourse = new Instructor(courseName);
+	vector <string> studentCourseList;
+	string courseName;
+	//char courseList[20];
+	string line;
+	string studentName; //name you are looking for
+	string existStudentName; //student that already exists
+	cout << "Please enter your name:" << endl;
+	getline(cin, studentName);
+	ifstream file("courses.txt");
+	//existStudentName = line.substr(line.find("$") + 1);
+	file.seekg(0, ios::beg);
+	while (getline(file, line)) {
+		existStudentName = line.substr(line.find("$") + 1);
+		if (line.front() == '#') {
+			line.erase(line.begin());
+			courseName = line;
+		}
+		if (studentName == existStudentName) {
+			//courseList[courseNum] = courseName;
+			studentCourseList.push_back(courseName);
+			//studentCourse->save(courseName);
+		}
+	
+
+	}
+	cout << "Hello " << studentName << "!"<< endl;
+	cout << "Your courses:" << endl;
+	while (!studentCourseList.empty()) {
+		//cout << studentCourseList << endl;
+		for (std::vector<string>::const_iterator i = studentCourseList.begin(); i != studentCourseList.end(); ++i)
+			std::cout << *i << endl;
+		studentCourseList.pop_back();
+	}
+	return; 
+
 }
