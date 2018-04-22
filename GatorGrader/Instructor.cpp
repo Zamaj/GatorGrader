@@ -16,6 +16,17 @@ Instructor::Instructor() {
 	courseNum = 0;
 	ifStudent = false;
 	//Instructor *instructor = new Instructor();
+	gradeA = 0.0;
+	gradeAMinus = 0.0;
+	gradeBPlus = 0.0;
+	gradeB = 0.0;
+	gradeBMinus = 0.0;
+	gradeCPlus = 0.0;
+	gradeC = 0.0;
+	gradeCMinus = 0.0;
+	gradeDPlus = 0.0;
+	gradeD = 0.0;
+	gradeDMinus = 0.0;
 }
 
 //constructor
@@ -136,6 +147,7 @@ void Instructor::mainMenu() {
 
 		if (courseChoice == "1" || courseChoice == "Add course" || courseChoice == "add course" || courseChoice == "Add Course") {
 			addCourse();
+			setGradingScale();
 		}
 
 		else if (courseChoice == "2" || courseChoice == "Remove course" || courseChoice == "remove course" || courseChoice == "Remove Course") {
@@ -281,5 +293,46 @@ void Instructor::findExistingStudent() {
 		studentCourseList.pop_back();
 	}
 	return; 
+
+}
+
+void Instructor::setGradingScale() {
+	
+
+	cout << "Set grading scale for course" << endl;
+
+	cout << "What is the cut-off for an A?" << endl;
+	cin >> gradeA;
+
+	cout << "What is the cut-off for an A-?" << endl;
+	cin >> gradeAMinus;
+
+	cout << "What is the cut-off for a B+?" << endl;
+	cin >> gradeBPlus;
+
+	cout << "What is the cut-off for a B?" << endl;
+	cin >> gradeB;
+
+	cout << "What is the cut-off for a B-?" << endl;
+	cin >> gradeBMinus;
+
+	cout << "What is the cut-off for a C+?" << endl;
+	cin >> gradeCPlus;
+
+	cout << "What is the cut-off for an C?" << endl;
+	cin >> gradeC;
+
+	cout << "What is the cut-off for an C-?" << endl;
+	cin >> gradeCMinus;
+
+	cout << "What is the cut-off for a D+?" << endl;
+	cin >> gradeDPlus;
+
+	cout << "What is the cut-off for a D?" << endl;
+	cin >> gradeD;
+
+	cout << "What is the cut-off for a D-?" << endl;
+	cin >> gradeDMinus;
+	
 
 }

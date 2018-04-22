@@ -1,9 +1,9 @@
+#Calc 2
 #Calculus 3
 Calculus 3$May Song
 #Discrete Structures
 Discrete Structures$Zach Jackson
 #Programming Fundamentals 2
-Programming Fundamentals 2$Zoe Frongillo
 Programming Fundamentals 2&Review60.000000
 Programming Fundamentals 2$Zach Jackson
 Programming Fundamentals 2@Review

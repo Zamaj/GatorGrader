@@ -26,6 +26,17 @@ public:
 	int courseNum; 
 	bool ifStudent;
 	//std::vector<Course*> &getCourseList();
+	double gradeA;
+	double gradeAMinus;
+	double gradeBPlus;
+	double gradeB;
+	double gradeBMinus;
+	double gradeCPlus;
+	double gradeC;
+	double gradeCMinus;
+	double gradeDPlus;
+	double gradeD;
+	double gradeDMinus;
 	
 	void firstTimeInstructor();
 	void addCourse();
@@ -34,4 +45,5 @@ public:
 	void mainMenu();
 	bool init();
 	void findExistingStudent();
+	void setGradingScale();
 };
