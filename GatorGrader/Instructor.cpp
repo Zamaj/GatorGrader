@@ -39,6 +39,7 @@ string Instructor::getName() {
 
 //method for when instructor is new, and has no courses 
 void Instructor::firstTimeInstructor() {
+
 	cout << "Welcome to GatorGrader. Please enter your name:" << endl;
 	getline(cin, instructorName);
 
@@ -74,6 +75,7 @@ void Instructor::addCourse() {
 
 //overloaded method to add a course
 void Instructor::addCourse(string name) {
+
 	Course *course = new Course(name);
 	courseList.push_back(course);
 	currentCourse = course;
@@ -81,6 +83,7 @@ void Instructor::addCourse(string name) {
 
 //method to remove a course
 void Instructor::removeCourse() {
+
 	string removeName;
 	cout << "Enter the name of the course you would like to delete:" << endl;
 	getline(cin, removeName);

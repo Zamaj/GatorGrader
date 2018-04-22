@@ -16,6 +16,7 @@ Course::Course(string name) {
 
 //deconstructor
 Course::~Course() {
+
 	string line;
 
 	//object of type ifstream created called file
@@ -79,6 +80,7 @@ string Course::tag(saveType type) {
 
 //method to add a student
 void Course::addStudent() {
+
 	string newStudentName;
 	string newStudentFirstName;
 	string newStudentLastName;
@@ -101,6 +103,7 @@ void Course::addStudent() {
 
 //overloaded method to add a student
 void Course::addStudent(string first, string last, string full) {
+
 	Student *student = new Student(first, last, full);
 	studentList.push_back(student);
 }
@@ -136,7 +139,9 @@ void Course::addAssignment() {
 
 //overloaded method to add assignment
 void Course::addAssignment(string name, double points) {
+
 	Assignment *assignment = new Assignment(name, points);
+
 	//adds assignment to vector assignmentList
 	assignmentList.push_back(assignment);
 
@@ -273,6 +278,7 @@ void Course::save(string newItem, double numPoints, saveType addItem) {
 
 //adds all of the assignments in a course to each student
 void Course::refresh() {
+
 	studentList.front()->addStudentAssignment(assignmentList.front());
 }
 
@@ -342,6 +348,7 @@ void Course::courseMenu() {
 
 //Alphabetical Sorter
 std::vector<Student*> Course::studentAlphaSort() {
+
 	vector<Student*> alphaSort = studentList;
 	std::string a;
 	std::string b;
@@ -350,6 +357,8 @@ std::vector<Student*> Course::studentAlphaSort() {
 		for (unsigned int j = 0; j < alphaSort.size() - i - 1; j++) {
 			a = alphaSort[j]->getLastName();
 			b = alphaSort[j + 1]->getLastName();
+
+			//for loop to go through next character if previous characters were the same
 			for (unsigned int k = 0; k < a.size(); k++) {
 				if (a[k] > b[k]) {
 					iter_swap(alphaSort.begin() + j, alphaSort.begin() + j + 1);
