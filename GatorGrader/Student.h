@@ -23,7 +23,10 @@ public:
 	std::string getFullName();
 	const vector<Assignment*>& getStudentAssignments();
 	void addStudentAssignment(string name, double pointsEarned, double pointsPossible);
+
+	//class methods
 	void addStudentAssignment(Assignment *assignment);
 	void gradeStudentAssignment(std::string whichAssignment, Course* course);
 	void gradeStudentAssignment(std::string assignment, double points, Course* course);
+	double getAverageGrade();
 };

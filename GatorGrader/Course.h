@@ -23,13 +23,14 @@ public:
 	enum saveType {courseSave, studentSave, assignmentSave, masterAssignmentSave, gradeSave};
 	Course(std::string name);
 	~Course();
+
 	void setCourseName(std::string name);
 	std::string getCourseName();
 	const vector<Student*>& getStudentList();
 	const vector<Assignment*>& getAssignmentList();
 	std::string tag(saveType type);
 	void addStudent();
-	void addStudent(std::string first, std::string last, std::string full);
+	Student* addStudent(std::string first, std::string last, std::string full);
 	void save(std::string studentName, std::string newItem, double numPoints, saveType addItem);
 	void addAssignment();
 	void addAssignment(std::string name, double points);
@@ -38,4 +39,5 @@ public:
 	void print();
 	void courseMenu();
 	void refresh();
+	std::vector<Student*> studentAlphaSort();
 };
