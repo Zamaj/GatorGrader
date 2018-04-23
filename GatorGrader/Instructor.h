@@ -23,28 +23,11 @@ public:
 	Instructor(std::string name);	
 	void setName(std::string name);
 	std::string getName();
-	int courseNum; 
-	bool ifStudent;
 	//std::vector<Course*> &getCourseList();
-
-	double gradeA;
-	double gradeAMinus;
-	double gradeBPlus;
-	double gradeB;
-	double gradeBMinus;
-	double gradeCPlus;
-	double gradeC;
-	double gradeCMinus;
-	double gradeDPlus;
-	double gradeD;
-	double gradeDMinus;
-	
 	void firstTimeInstructor();
 	void addCourse();
 	void addCourse(std::string name);
 	void removeCourse();
 	void mainMenu();
-	bool init();
-	void findExistingStudent();
-	void setGradingScale();
+	void init();
 };
