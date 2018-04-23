@@ -49,7 +49,7 @@ double Assignment::getEarnedPoints() {
 		return earnedPoints;
 	}
 	else {
-		cout << "Assignment not yet graded;" << endl;
+		cout << "Assignment " << assignmentName << " not yet graded" << endl;
 		return earnedPoints;
 	}
 }
@@ -61,4 +61,3 @@ double Assignment::getPercentage() {
 bool Assignment::isGraded() {
 	return assignmentGraded;
 }
-

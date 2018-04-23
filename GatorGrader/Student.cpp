@@ -83,3 +83,21 @@ void Student::gradeStudentAssignment(string assignment, double points, Course* c
 		}
 	}
 }
+
+double Student::getAverageGrade() {
+	double decGrade = 0.0;
+	double earnedSum = 0;
+	double possibleSum = 0;
+
+	//for loop to get sum of the points student has earned and sum of the possible points
+	//that can be earned
+	for (int i = 0; i < assignments.size(); i++) {
+		earnedSum = earnedSum + assignments[i]->getEarnedPoints();
+		possibleSum = possibleSum + assignments[i]->getPossiblePoints();
+	}
+
+	//overall grade calculated by dividing sum of the earned points by sum of possible points
+	decGrade = earnedSum / possibleSum;
+	//calculateLetterGrade(decGrade);
+	return decGrade;
+}

@@ -1,10 +1,12 @@
 #Math
 Math&HW3 10.00
-Math$Big Ben
-Math@HW3
+Math$Jimmy John
+Math@HW3 6.000000
 Math&Test1 100.00
+Math&HW2 10.00
 Math&HW1 10.00
 Math$John Smith
-Math@HW3
-Math@Test1
-Math@HW1
+Math@HW3 9.000000
+Math@Test1 92.000000
+Math@HW2 9.000000
+Math@HW1 8.000000

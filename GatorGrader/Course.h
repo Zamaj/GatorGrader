@@ -35,7 +35,10 @@ public:
 	void addAssignment(std::string name, double points);
 	void gradeAssignment();
 	void showStudentGrade();
+	void showStudentAverage();
+	void showAllStudentAverages();
 	void print();
 	void courseMenu();
 	void refresh();
+	std::vector<Student*> studentAlphaSort();
 };

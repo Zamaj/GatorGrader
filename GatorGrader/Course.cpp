@@ -256,6 +256,36 @@ void Course::showStudentGrade()
 	}
 }
 
+void Course::showStudentAverage()
+{
+	string studentName;
+	
+	cout << "Enter the name of the student:" << endl;
+	
+	getline(cin, studentName);
+
+	for (unsigned int i = 0; i < studentList.size(); i++) {
+
+		if (studentList[i]->getFullName() == studentName)
+		{
+			cout << studentName << ": " << studentList[i]->getAverageGrade() << endl;			
+			return;
+		}
+	}
+
+	
+	cout << "No student '" << studentName << "'" << endl;
+	return;	
+}
+
+void Course::showAllStudentAverages()
+{
+	for (unsigned int i = 0; i < studentList.size(); i++) {
+				
+		cout << studentList[i]->getFullName() << ": " << studentList[i]->getAverageGrade() << endl;			
+	}
+}
+
 void Course::save(string studentName, string newItem, double numPoints, saveType addItem) {
 
 	string line;
@@ -381,6 +411,8 @@ void Course::print() {
 
 	cout << courseName << endl;
 
+
+
 	cout << "Students:" << endl;
 	for (unsigned int i = 0; i < studentList.size(); i++) {
 		if (studentList[i] == studentList.back()) {
@@ -416,7 +448,9 @@ void Course::courseMenu()
 		cout << "2. New assignment" << endl;
 		cout << "3. Add student(s)" << endl;
 		cout << "4. View scores for student" << endl;
-		cout << "5. Print course" << endl;
+		cout << "5. View average for student" << endl;
+		cout << "6. View average for all students" << endl;
+		cout << "7. Print course" << endl;
 		cout << endl;
 		cout << "Enter 'm' to return to main menu" << endl;
 
@@ -442,7 +476,18 @@ void Course::courseMenu()
 			showStudentGrade();
 		}
 
-		if (menuChoice == "5")
+		if (menuChoice == "5") 
+		{
+			showStudentAverage();
+		}		
+		
+
+		if (menuChoice == "6")
+		{
+			showAllStudentAverages();
+		}
+
+		if (menuChoice == "7")
 		{
 			print();
 		}
@@ -452,4 +497,30 @@ void Course::courseMenu()
 			break;
 		}
 	}
+}
+
+std::vector<Student*> Course::studentAlphaSort() {
+	vector<Student*> alphaSort = studentList;
+	std::string a;
+	std::string b;
+	//sorts students alphabetically by last name
+	for (unsigned int i = 0; i < studentList.size() - 1; i++) {
+		for (unsigned int j = 0; j < alphaSort.size() - i - 1; j++) {
+			a = alphaSort[j]->getLastName();
+			b = alphaSort[j + 1]->getLastName();
+			for (unsigned int k = 0; k < a.size(); k++) {
+				if (a[k] > b[k]) {
+					iter_swap(alphaSort.begin() + j, alphaSort.begin() + j + 1);
+				}
+				else if (a[k] == b[k]) {
+					continue;
+				}
+				else {
+					break;
+				}
+			}
+
+		}
+	}
+	return alphaSort;
 }

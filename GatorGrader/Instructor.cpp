@@ -112,6 +112,7 @@ void Instructor::mainMenu() {
 		cout << "Enter a course name to view options for that course or choose an option below:" << endl;
 		cout << "1. Add course" << endl;
 		cout << "2. Remove course" << endl;
+		cout << "3. Exit" << endl;
 
 		getline(cin, courseChoice);
 
@@ -123,6 +124,11 @@ void Instructor::mainMenu() {
 
 		else if (courseChoice == "2" || courseChoice == "Remove course" || courseChoice == "remove course" || courseChoice == "Remove Course") {
 			removeCourse();
+		}
+
+		else if (courseChoice == "3")
+		{
+			exit(0);
 		}
 
 		else {
