@@ -68,6 +68,7 @@ double Student::getAverageGrade() {
 	return decGrade;
 }
 
+//method to calculate overall letter grade
 string Student::calculateLetterGrade(double decGrade) {
 	string letterGrade;
 	Instructor *instructor1 = new Instructor();

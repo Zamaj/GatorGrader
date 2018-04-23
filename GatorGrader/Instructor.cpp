@@ -35,6 +35,24 @@ Instructor::Instructor(string name) {
 	this->instructorName = name;
 }
 
+Instructor::~Instructor() {
+	//resetCourses();
+}
+
+void Instructor::resetCourses() {
+	Course *temp = NULL;
+	vector<Course*>::iterator it;
+	//for (it = courseList.begin(); it != courseList.end();) {
+	while (!courseList.empty()){
+		temp = courseList.back();
+		delete temp;
+		courseList.pop_back();
+		 
+	}
+
+}
+
+
 //mutator method to set name of instructor
 void Instructor::setName(string name) {
 	this->instructorName = name;
@@ -138,12 +156,15 @@ void Instructor::mainMenu() {
 	}
 
 	string courseChoice;
+	/*bool stop = false;
 
-	while (true) {
+	while (stop == false) {*/
+	while (true){
 		//instructor can add and remove courses or manage a course by typing in its name
 		cout << "Enter a course name to view options for that course or choose an option below:" << endl;
 		cout << "1. Add course" << endl;
 		cout << "2. Remove course" << endl;
+		//cout << "3. Exit instructor view" << endl;
 
 		getline(cin, courseChoice);
 
@@ -157,6 +178,10 @@ void Instructor::mainMenu() {
 		else if (courseChoice == "2" || courseChoice == "Remove course" || courseChoice == "remove course" || courseChoice == "Remove Course") {
 			removeCourse();
 		}
+
+		/*else if (courseChoice == "3") {
+			stop = true;
+		}*/
 
 		else {
 			for (unsigned int i = 0; i < courseList.size(); i++) {
@@ -177,7 +202,7 @@ void Instructor::mainMenu() {
 
 //method that distinguishes between students and instructors
 bool Instructor::init() {
-
+	//resetCourses();
 	ifstream file("courses.txt");
 	string courseName;
 	string roleOption;
@@ -192,18 +217,10 @@ bool Instructor::init() {
 		firstTimeInstructor();
 	}
 
-	//if user is a student, calls method findExistingStudent()
-	else if (roleOption == "student") {
-		findExistingStudent();
-		//sets bool variable ifStudent to true, which will be returned
-		ifStudent = true;
-	}
-
-	//if user is an instructor
-	else if (roleOption == "instructor") {
 		string foundCourseData;
 		string foundCourseName;
 		string currentStudent;
+	
 
 		//reads file line by line, storing each line in string variable foundCourseData
 		while (getline(file, foundCourseData)) {
@@ -271,10 +288,21 @@ bool Instructor::init() {
 			}
 
 		}
-		//calls method mainMenu(), since user is an instructor
-		mainMenu();
 
-	}
+		//if user is an instructor
+		if (roleOption == "instructor") {
+			//calls method mainMenu(), since user is an instructor
+			mainMenu();
+		}
+
+		//if user is a student, calls method findExistingStudent()
+		else if (roleOption == "student") {
+			findExistingStudent();
+			//sets bool variable ifStudent to true, which will be returned
+			ifStudent = true;
+		}
+
+	
 	return ifStudent;
 }
 
@@ -294,41 +322,62 @@ void Instructor::findExistingStudent() {
 	cout << "Please enter your name:" << endl;
 	getline(cin, studentName);
 
-	ifstream file("courses.txt");
-	//goes to beginning of file
-	file.seekg(0, ios::beg);
+	//ifstream file("courses.txt");
+	////goes to beginning of file
+	//file.seekg(0, ios::beg);
 
 	//while loop to read file, line by line
-	while (getline(file, line)) {
+	//while (getline(file, line)) {
 
-		//finds students, noted by $
-		existStudentName = line.substr(line.find("$") + 1);
+	//	//finds students, noted by $
+	//	existStudentName = line.substr(line.find("$") + 1);
 
-		//finds courses, denoted by #
-		if (line.front() == '#') {
-			//gets rid of #, so that line only contains the course name
-			line.erase(line.begin());
-			//courseName set to the course name
-			courseName = line;
-		}
+	//	//finds courses, denoted by #
+	//	if (line.front() == '#') {
+	//		//gets rid of #, so that line only contains the course name
+	//		line.erase(line.begin());
+	//		//courseName set to the course name
+	//		courseName = line;
+	//	}
 
-		//checks if found student in file matches the student name entered
-		if (studentName == existStudentName) {
-		//adds course name to vector studentCourseList
-			studentCourseList.push_back(courseName);
-		}
-	
-	}
+	//	//checks if found student in file matches the student name entered
+	//	if (studentName == existStudentName) {
+	//	//adds course name to vector studentCourseList
+	//		studentCourseList.push_back(courseName);
+	//	}
+	//
+	//}
 
 	cout << "Hello " << studentName << "!"<< endl;
 	cout << "Your courses:" << endl;
 
 	//while loop to print out vector studentCourseList
-	while (!studentCourseList.empty()) {
+	/*while (!studentCourseList.empty()) {
 		for (std::vector<string>::const_iterator i = studentCourseList.begin(); i != studentCourseList.end(); ++i)
 			std::cout << *i << endl;
 		studentCourseList.pop_back();
+	}*/
+
+	Course *course = NULL;
+	Student *student = NULL;
+	string letterGrade = "";
+	double grade = 0.0;
+	for (unsigned int i = 0; i < courseList.size(); i++) {
+		//courseList[i]->getCourseName();
+		course = courseList[i];
+		for (unsigned int j = 0; j < course->getStudentList().size(); j++) {
+			student = course->getStudentList()[j];
+			if (student->getFullName() == studentName) {
+				grade = student->getAverageGrade();
+				letterGrade = student->calculateLetterGrade(grade);
+				cout << course->getCourseName() << " ";
+				cout << letterGrade << endl;
+			}
+			
+			
+		}
 	}
+
 	return; 
 
 }

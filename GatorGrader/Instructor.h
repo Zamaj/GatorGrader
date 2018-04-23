@@ -20,6 +20,7 @@ private:
 public:
 	Course *currentCourse;
 	Instructor();
+	~Instructor();
 	Instructor(std::string name);	
 	void setName(std::string name);
 	std::string getName();
@@ -47,4 +48,5 @@ public:
 	bool init();
 	void findExistingStudent();
 	void setGradingScale();
+	void resetCourses();
 };
