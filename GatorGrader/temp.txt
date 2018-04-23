@@ -1,4 +1,3 @@
-#Physics 1
 #Calculus 1
 Calculus 1&HW1 12.00
 Calculus 1&Project 100
@@ -7,7 +6,7 @@ Calculus 1@HW1 6.00
 Calculus 1$Zach Jackson
 Calculus 1@HW1 8.00
 Calculus 1$Denisse Ventura
-Calculus 1@HW1 12.00
+Calculus 1@HW1 12.00 77.00
 #Programming Fundamentals 2
 Programming Fundamentals 2&PA1 100.00
 Programming Fundamentals 2&Final 300

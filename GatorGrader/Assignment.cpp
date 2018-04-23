@@ -8,14 +8,12 @@
 // #include "Instructor.h"
 // #include <string>
 
-//constuctor
 Assignment::Assignment(std::string name, double points) {
 	assignmentName = name;
 	possiblePoints = points;
 	earnedPoints = 0;
 	assignmentGraded = false;
 }
-
 
 Assignment::Assignment(string name, double pointsEarned, double pointsPossible)
 {

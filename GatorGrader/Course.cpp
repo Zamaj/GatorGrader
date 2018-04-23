@@ -368,7 +368,6 @@ void Course::courseMenu()
 	cout << "3. Add student(s)" << endl;
 	cout << "4. View scores for student" << endl;
 	cout << "5. Print course" << endl;
-	cout << "6. Print student rank in course" << endl;
 
 	getline(cin, menuChoice);
 
@@ -396,9 +395,6 @@ void Course::courseMenu()
 	{
 		print();
 	}
-	if (menuChoice == "6"){
-		printStudentRank();
-	}
 }
 
 
@@ -407,14 +403,10 @@ std::vector<Student*> Course::studentAlphaSort() {
 	vector<Student*> alphaSort = studentList;
 	std::string a;
 	std::string b;
-
 	for (unsigned int i = 0; i < studentList.size() - 1; i++) {
-
 		for (unsigned int j = 0; j < alphaSort.size() - i - 1; j++) {
 			a = alphaSort[j]->getLastName();
 			b = alphaSort[j + 1]->getLastName();
-
-			//for loop to go through the next character if they equal each other
 			for (unsigned int k = 0; k < a.size(); k++) {
 				if (a[k] > b[k]) {
 					iter_swap(alphaSort.begin() + j, alphaSort.begin() + j + 1);
@@ -430,48 +422,4 @@ std::vector<Student*> Course::studentAlphaSort() {
 		}
 	}
 	return alphaSort;
-}
-
-//Test with Average Grade for each student
-void Course::printStudentRank() {
-	vector<Student*> rankSort = studentList;
-	double a;
-	double b;
-
-	//Swaps through Student List based on grades in course
-	for (unsigned int i = 0; i < studentList.size() - 1; i++) {
-
-		for (unsigned int j = 0; j < rankSort.size() - i - 1; j++) {
-
-			a = rankSort[j]->getAverageGrade();
-			b = rankSort[j + 1]->getAverageGrade();
-
-			if (a < b) {
-				iter_swap(rankSort.begin() + j, rankSort.begin() + j + 1);
-			}
-
-		}
-	}
-
-	cout << "Student Rank:" << endl;
-	int rank = 1;
-	
-	//Prints out Ranks
-	for (unsigned int i = 0; i < rankSort.size()-1; i++) {
-		a = rankSort[i]->getAverageGrade();
-		b = rankSort[i+1]->getAverageGrade();
-			
-		cout << rank << ". ";
-		cout << rankSort[i]->getFirstName() << " " << rankSort[i]->getLastName() << endl;
-			
-		if (a > b) {
-			rank++;
-		}
-		
-	}
-
-	//Prints the Last Student's Rank
-	cout << rank << ". ";
-	cout << rankSort[rankSort.size()-1]->getFirstName() << " " << rankSort[rankSort.size()-1]->getLastName() << endl;
-
 }

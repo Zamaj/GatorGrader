@@ -392,7 +392,7 @@ void Instructor::setGradingScale() {
 
 
 
-/*void Instructor::visualizeCourse(){
+void Instructor::visualizeCourse(){
 
 	// method to visualize course grades by creating a histogram
 	// with the following predefinited categories (inclusive) based on percentage points
@@ -508,4 +508,11 @@ void Instructor::setGradingScale() {
 	}
 
 }
+<<<<<<< HEAD
+
+
+
+
+=======
+>>>>>>> 712e1ba8ad638bf64f647892f48b119e137f8dd4
 */
