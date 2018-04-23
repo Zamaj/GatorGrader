@@ -140,6 +140,7 @@ void Instructor::listCourses()
 //main menu for instructor
 void Instructor::mainMenu() {
 
+	//lists courses
 	listCourses();
 
 	string courseChoice;
