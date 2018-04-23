@@ -3,6 +3,7 @@
 
 using namespace std;
 
+//Driver code
 int main()
 {	
 	Instructor *instructor = new Instructor();
@@ -10,8 +11,6 @@ int main()
 	instructor->init();
 
 	instructor->mainMenu();
-
-	//instructor->currentCourse->print();
 
     return 0;
 }

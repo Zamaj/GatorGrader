@@ -35,8 +35,10 @@ public:
 	void addAssignment(std::string name, double points);
 	void gradeAssignment();
 	void showStudentGrade();
+	void showAllStudentGrades();
 	void showStudentAverage();
 	void showAllStudentAverages();
+	void showAssignmentAverage();
 	void print();
 	void courseMenu();
 	void refresh();

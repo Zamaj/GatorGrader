@@ -283,7 +283,6 @@ void Course::showStudentGrade()
 			return;
 		}
 	}
-
 }
 
 void Course::showAllStudentGrades() 
@@ -306,8 +305,6 @@ void Course::showAllStudentGrades()
 			}			
 		}
 	}	
-
-	cout << endl;
 }
 
 //Show average for student from all assignments (i.e. grade in class)

@@ -10,6 +10,8 @@
 #include <sstream>
 #include <algorithm>
 
+//Instructor class contains higher-level functionality, such as managing courses
+
 Instructor::Instructor() {
 	instructorName = "Unkown Instructor";
 }
@@ -67,7 +69,122 @@ void Instructor::addCourse(string name) {
 	currentCourse = course;
 }
 
-void Instructor::removeCourse() {
+void Instructor::visualizeCourse() {
+
+	// method to visualize course grades by creating a histogram
+	// with the following predefinited categories (inclusive) based on percentage points
+	// calculated with the same method of earned points divided by possible points:
+	// A: 90+
+	// B: 80-89
+	// C: 70-79
+	// D: 60-69
+	// F: 0-59
+
+	// stores the insructor's chosen course to visualize
+	string courseGraphSelection;
+
+	cout << "Enter the name of a course you would like to visualize grades for:" << endl;
+	getline(cin, courseGraphSelection);
+
+	bool courseGraphSelectionFound = false;
+
+	// loops through course list to check for valid course input
+	for (unsigned int i = 0; i < courseList.size(); i++)
+	{
+		if (courseList[i]->getCourseName() == courseGraphSelection)
+		{
+			currentCourse = courseList[i];
+			courseGraphSelectionFound = true;
+		}
+	}
+
+	if (courseGraphSelectionFound == false)
+	{
+		cout << "Course not found" << endl;
+		return;
+	}
+
+	// initialize frequency counters
+	int acount = 0;
+	int bcount = 0;
+	int ccount = 0;
+	int dcount = 0;
+	int fcount = 0;
+
+	int gradeNumber;
+
+	for (int i = 0; i < currentCourse->getStudentList().size(); i++) 
+	{
+		double studentAverageGrade = currentCourse->getStudentList()[i]->getAverageGrade();
+
+		// sets switch input
+		if (studentAverageGrade >= 0.9)
+		{
+			acount++;
+		}
+
+		if (studentAverageGrade >= 0.8 && studentAverageGrade < 0.9)
+		{
+			bcount++;
+		}
+
+		if (studentAverageGrade >= 0.7 && studentAverageGrade < 0.8)
+		{
+			ccount++;
+		}
+
+		if (studentAverageGrade >= 0.6 && studentAverageGrade < 0.7)
+		{
+			dcount++;
+		}
+
+		if (studentAverageGrade < 0.6)
+		{
+			fcount++;
+		}
+	}
+
+	// creates historgram, category by category
+	cout << "A: ";
+	for (int ac = 0; ac<acount; ac++)
+	{
+		cout << "x";
+	}
+	cout << endl;
+
+	cout << "B: ";
+	for (int bc = 0; bc<bcount; bc++)
+	{
+		cout << "x";
+	}
+	cout << endl;
+
+	cout << "C: ";
+	for (int cc = 0; cc<ccount; cc++)
+	{
+		cout << "x";
+	}
+	cout << endl;
+
+	cout << "D: ";
+	for (int dc = 0; dc<dcount; dc++)
+	{
+		cout << "x";
+	}
+	cout << endl;
+
+	cout << "F: ";
+	for (int fc = 0; fc<fcount; fc++)
+	{
+		cout << "x";
+	}
+
+	cout << endl;
+}
+
+// Removes course from memory and file
+void Instructor::removeCourse()
+{
 	string removeName;
 	cout << "Enter the name of the course you would like to delete:" << endl;
 	getline(cin, removeName);
@@ -81,17 +198,21 @@ void Instructor::removeCourse() {
 
 	getline(cin, confirmChoice);
 
-	if (confirmChoice != "1") {
+	if (confirmChoice != "1")
+	{
 		return;
 	}		
 	
 	vector<Course*>::iterator it;
-	for (it = courseList.begin(); it != courseList.end();) {
-		if ((*it)->getCourseName() == removeName) {
+	for (it = courseList.begin(); it != courseList.end();) 
+	{
+		if ((*it)->getCourseName() == removeName) 
+		{
 			delete *it;
 			it = courseList.erase(it);
 		}
-		else {
+		else
+		{
 			it++;
 		}
 	}
@@ -99,10 +220,12 @@ void Instructor::removeCourse() {
 	cout << "Course '" << removeName << "' has been removed" << endl;
 }
 
-void Instructor::mainMenu() {
+void Instructor::mainMenu()
+{
 
 	cout << "Your Courses:" << endl;
-	for (unsigned int i = 0; i < courseList.size(); i++) {
+	for (unsigned int i = 0; i < courseList.size(); i++)
+	{
 		cout << courseList[i]->getCourseName() << endl;
 	}
 
@@ -111,8 +234,9 @@ void Instructor::mainMenu() {
 	while (true) {
 		cout << "Enter a course name to view options for that course or choose an option below:" << endl;
 		cout << "1. Add course" << endl;
-		cout << "2. Remove course" << endl;
-		cout << "3. Exit" << endl;
+		cout << "2. Visualize course grades" << endl;
+		cout << "3. Remove course" << endl;
+		cout << "4. Exit" << endl;
 
 		getline(cin, courseChoice);
 
@@ -122,31 +246,40 @@ void Instructor::mainMenu() {
 			addCourse();
 		}
 
-		else if (courseChoice == "2" || courseChoice == "Remove course" || courseChoice == "remove course" || courseChoice == "Remove Course") {
+		else if (courseChoice == "2") {
+			visualizeCourse();
+		}
+
+		else if (courseChoice == "3") {
 			removeCourse();
 		}
 
-		else if (courseChoice == "3")
+		else if (courseChoice == "4")
 		{
 			exit(0);
 		}
 
-		else {
-			for (unsigned int i = 0; i < courseList.size(); i++) {
-				if (courseList[i]->getCourseName() == courseChoice) {
+		else
+		{
+			for (unsigned int i = 0; i < courseList.size(); i++) 
+			{
+				if (courseList[i]->getCourseName() == courseChoice) 
+				{
 					currentCourse = courseList[i];
 					courseFound = true;
 					currentCourse->courseMenu();
 				}
 			}
 
-			if (courseFound == false) {
+			if (courseFound == false)
+			{
 				cout << "You have no course '" << courseChoice << "'." << endl;
 			}
 		}		
 	}
 }
 
+// Runs ons startup to load data from file into memory
 void Instructor::init() 
 {
 	string currentStudent;
@@ -165,6 +298,9 @@ void Instructor::init()
 		while (getline(file, foundCourseData))
 		{
 
+			//Different data types designated by symbols
+
+			// Course
 			if (foundCourseData.front() == '#') 
 			{
 				foundCourseData.erase(foundCourseData.begin());
@@ -173,6 +309,7 @@ void Instructor::init()
 				continue;
 			}
 
+			// Student
 			if (foundCourseData.at(foundCourseName.size()) == '$') 
 			{
 				foundCourseData.erase(0, foundCourseName.size() + 1);
@@ -184,6 +321,7 @@ void Instructor::init()
 				continue;
 			}
 
+			// Student Assignment
 			if (foundCourseData.at(foundCourseName.size()) == '@') {
 
 				foundCourseData.erase(0, foundCourseName.size() + 1);
@@ -213,6 +351,7 @@ void Instructor::init()
 				continue;
 			}
 
+			// Course assignment
 			if (foundCourseData.at(foundCourseName.size()) == '&')
 			{
 				foundCourseData.erase(0, foundCourseName.size() + 1);
