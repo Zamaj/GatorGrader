@@ -497,8 +497,3 @@ void Instructor::setGradingScale() {
 	}
 
 }
-
-
-
-
-*/
