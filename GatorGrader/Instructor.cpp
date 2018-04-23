@@ -491,8 +491,3 @@ void Instructor::visualizeCourse(){
 	}
 
 }
-
-
-
-
-*/
