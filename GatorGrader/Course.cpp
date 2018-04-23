@@ -106,12 +106,18 @@ void Course::addStudent(string first, string last, string full)
 
 void Course::addAssignment()
 {	
-
 	string newAssignmentName;
 	string newAssignmentPoints;
 	double points;
 
-	cout << "Assignment Name:" << endl;
+	if (studentList.size() == 0) 
+	{
+		cout << "Please add at least one student before adding assignments" << endl;
+		cout << endl;
+		return;
+	}
+
+	cout << "Assignment Name: (At this time, assignments may only be one word)" << endl;
 	getline(cin, newAssignmentName);
 	
 	cout << "Assignment points:" << endl;
@@ -126,8 +132,9 @@ void Course::addAssignment()
 		studentList[i]->addStudentAssignment(assignment);
 	}
 
-	save("", newAssignmentName,points, assignmentSave);
 	save("", newAssignmentName, points, masterAssignmentSave);
+	save("", newAssignmentName,points, assignmentSave);
+	
 
 	cout << "Assignment '" << newAssignmentName << "' worth " << points << " points has been added to course " << courseName << endl;
 }
@@ -207,8 +214,6 @@ void Course::gradeAssignment()
 			studentList[i]->gradeStudentAssignment(whichAssignment, points, this);
 		}		
 	}
-
-	cout << "Which assignment would you like to grade?";
 }
 
 void Course::showStudentGrade()
@@ -262,47 +267,94 @@ void Course::save(string studentName, string newItem, double numPoints, saveType
 	string points = to_string(numPoints);
 	points.erase(points.end() - 4, points.end());
 
-	while (getline(file, line)) {
+	while (getline(file, line)) 
+	{
 		fileContent.push_back(line);
-	}	
+	}
 
-	for (unsigned int i = 0; i < fileContent.size(); i++) {
+	if (fileContent.size() == 0 && addItem == courseSave) {
 
-		vector<string>::iterator it = fileContent.begin() + i;
-		newItem = reset;
+		vector<string>::iterator it = fileContent.begin();
 
-		if (addItem == courseSave) {
-			fileContent.insert(it, newItem.insert(0, tag(addItem)));
-			break;
-		}
+		fileContent.insert(it, newItem.insert(0, tag(addItem)));		
+	}
 
-		if (addItem == studentSave) {
-			if (it->substr(1, it->back()) == courseName) {
-				fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
+	else if (fileContent.size() == 0 && addItem != courseSave){
+		cout << "Please add a course first" << endl;
+		return;
+	}
+
+	else {
+
+		for (unsigned int i = 0; i < fileContent.size(); i++)
+		{
+
+			vector<string>::iterator it = fileContent.begin() + i;
+			newItem = reset;
+
+			if (addItem == courseSave)
+			{
+				fileContent.insert(it, newItem.insert(0, tag(addItem)));
 				break;
 			}
-		}
 
-		if (addItem == assignmentSave) {			
-			if (it->substr(0, courseName.size()) == courseName && it->at(courseName.size()) == '$') {							
-				fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
-			}	
-		}
-
-		if (addItem == masterAssignmentSave) {
-			if (it->substr(1, it->back()) == courseName) {
-				newItem.insert(0, tag(addItem));
-				newItem.append(" ");
-
-				newItem.append(points);
-				fileContent.insert(it + 1, newItem);
+			if (addItem == studentSave)
+			{
+				if (it->substr(1, it->back()) == courseName) {
+					fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
+					break;
+				}
 			}
-		}
 
-		if (addItem == gradeSave) {
-			if ((fileContent[i].substr(courseName.size() + 1, fileContent[i].back()) == studentName) && ((it + 1)->substr(0, courseName.size()) == courseName && (it + 1)->at(courseName.size()) == '@')) {
-				fileContent[i + 1].append(" ");
-				fileContent[i + 1].append(points);
+			if (addItem == assignmentSave)
+			{
+				if (it->substr(0, courseName.size()) == courseName && it->at(courseName.size()) == '$') {
+					fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
+				}
+			}
+
+			if (addItem == masterAssignmentSave)
+			{
+				if (it->substr(1, it->back()) == courseName) {
+					newItem.insert(0, tag(addItem));
+					newItem.append(" ");
+
+					newItem.append(points);
+					fileContent.insert(it + 1, newItem);
+				}
+			}
+
+			if (addItem == gradeSave)
+			{
+				if (fileContent[i].length() >= courseName.length() && (fileContent[i].substr(courseName.size() + 1, fileContent[i].back()) == studentName))
+				{
+					it++;
+					int counter = 0;
+
+					while (it != fileContent.end() && it->at(courseName.size()) != '$')
+					{
+						if (it->substr(courseName.size() + 1, newItem.size()) == newItem)
+						{
+							if (it->size() >= courseName.length() + newItem.length() + 3 && isdigit(it->at(courseName.length() + newItem.length() + 3)))
+							{
+								it->erase(courseName.length() + newItem.length() + 3, it->back());
+								cout << "Existing grade overwritten" << endl;
+								it->append(" ");
+								it->append(to_string(numPoints));
+							}
+
+							else {
+								it->append(" ");
+								it->append(to_string(numPoints));
+							}
+						}
+
+						it++;
+						counter++;
+					}
+
+					i += counter;
+				}
 			}
 		}
 	}
@@ -354,41 +406,50 @@ void Course::print() {
 }
 
 void Course::courseMenu()
-{
-
+{	
 	string menuChoice;
 
-	cout << "What would you like to do in " << courseName << "?" << endl;
-	cout << "1. Grade Assignment" << endl;
-	cout << "2. New assignment" << endl;
-	cout << "3. Add student(s)" << endl;
-	cout << "4. View scores for student" << endl;
-	cout << "5. Print course" << endl;
-
-	getline(cin, menuChoice);
-
-	if (menuChoice == "1") 
+	while (true) 
 	{
-		gradeAssignment();
-	}
+		cout << "What would you like to do in " << courseName << "?" << endl;
+		cout << "1. Grade Assignment" << endl;
+		cout << "2. New assignment" << endl;
+		cout << "3. Add student(s)" << endl;
+		cout << "4. View scores for student" << endl;
+		cout << "5. Print course" << endl;
+		cout << endl;
+		cout << "Enter 'm' to return to main menu" << endl;
 
-	if (menuChoice == "2")
-	{
-		addAssignment();
-	}
+		getline(cin, menuChoice);
 
-	if (menuChoice == "3") 
-	{
-		addStudent();
-	}
+		if (menuChoice == "1")
+		{
+			gradeAssignment();
+		}
 
-	if (menuChoice == "4")
-	{
-		showStudentGrade();
-	}
+		if (menuChoice == "2")
+		{
+			addAssignment();
+		}
 
-	if (menuChoice == "5") 
-	{
-		print();
+		if (menuChoice == "3")
+		{
+			addStudent();
+		}
+
+		if (menuChoice == "4")
+		{
+			showStudentGrade();
+		}
+
+		if (menuChoice == "5")
+		{
+			print();
+		}
+
+		if (menuChoice == "m")
+		{
+			break;
+		}
 	}
 }

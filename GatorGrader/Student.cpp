@@ -46,16 +46,22 @@ string Student::getFullName() {
 
 void Student::gradeStudentAssignment(string whichAssignment, Course * course) {
 	
-	for (unsigned int i = 0; i < assignments.size(); i++) {
-		if (assignments[i]->getAssignmentName() == whichAssignment) {
+	for (unsigned int i = 0; i < assignments.size(); i++) 
+	{
+		if (assignments[i]->getAssignmentName() == whichAssignment) 
+		{
 			string pointsStr;
 			double points;
+
 			cout << "Enter grade:" << endl;
+
 			getline(cin, pointsStr);
+
 			points = atof(pointsStr.c_str());
 
 			assignments[i]->setEarnedPoints(points);
-			course->save(fullName, whichAssignment, 0, Course::gradeSave);
+
+			course->save(fullName, whichAssignment, points, Course::gradeSave);
 
 			cout << fullName << ": " << points << "/" << assignments[i]->getPossiblePoints() << " on " << assignments[i]->getAssignmentName() << endl;
 			return;
