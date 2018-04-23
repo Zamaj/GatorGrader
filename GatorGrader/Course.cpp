@@ -377,6 +377,46 @@ void Course::refresh() {
 	studentList.front()->addStudentAssignment(assignmentList.front());
 }
 
+void Course::showAssignmentAverage()
+{
+	string assignmentSelect;
+	bool assignmentFound = false;
+	int assignmentTotal = 0;
+	int average;
+
+	//get user input
+	cout << "Enter the name of the assignment:" << endl;
+	getline(cin, assignmentSelect);
+
+	//iterate to look for assignment
+	for (unsigned int i = 0; i < assignmentList.size(); i++)
+	{
+		if (assignmentList[i]->getAssignmentName() == assignmentSelect)
+		{
+			currentStudent = studentList[i];
+			assignmentFound = true;
+			break;
+		}
+	}
+
+	//if assignment does not exist
+	if (assignmentFound == false)
+	{
+		cout << "No such assignment" << endl;
+		return;
+	}
+
+	//average calculation
+	for (unsigned int i = 0; i < assignmentList.size(); i++)
+	{
+		assignmentTotal = assignmentTotal + assignmentList[i]->getEarnedPoints();
+	}
+
+	average = assignmentTotal / assignmentList.size();
+	cout << "Assignment " << assignmentSelect  << " average is: " << average << endl;
+	return;
+}
+
 void Course::print() {
 
 	cout << courseName << endl;
@@ -416,7 +456,8 @@ void Course::courseMenu()
 		cout << "2. New assignment" << endl;
 		cout << "3. Add student(s)" << endl;
 		cout << "4. View scores for student" << endl;
-		cout << "5. Print course" << endl;
+		cout << "5. View the average score of an assignment" << endl;
+		cout << "6. Print course" << endl;
 		cout << endl;
 		cout << "Enter 'm' to return to main menu" << endl;
 
@@ -443,6 +484,11 @@ void Course::courseMenu()
 		}
 
 		if (menuChoice == "5")
+		{
+			showAssignmentAverage();
+		}
+
+		if (menuChoice == "6")
 		{
 			print();
 		}
