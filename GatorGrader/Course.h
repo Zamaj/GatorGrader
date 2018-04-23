@@ -40,4 +40,5 @@ public:
 	void courseMenu();
 	void refresh();
 	std::vector<Student*> studentAlphaSort();
+	void printStudentRank();
 };
