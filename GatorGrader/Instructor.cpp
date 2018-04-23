@@ -496,4 +496,4 @@ void Instructor::setGradingScale() {
 		cout << frequencyCounter;
 	}
 
-}
+}*/
