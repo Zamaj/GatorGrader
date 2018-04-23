@@ -21,7 +21,7 @@ private:
 	Student* currentStudent;
 	Assignment* currentAssignment;
 public:
-	enum saveType {courseSave, studentSave, assignmentSave, masterAssignmentSave, gradeSave};
+	enum saveType {courseSave, studentSave, assignmentSave, masterAssignmentSave, gradeSave, creditSave};
 	Course(std::string name, int credits);
 	~Course();
 	void setCourseName(std::string name);

@@ -9,10 +9,14 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <ostream>
+
+using namespace std;
 
 Instructor::Instructor() {
 	instructorName = "Unknown Instructor";
 	courseNum = 0;
+	numOfCredits = 0;
 	//Instructor *instructor = new Instructor();
 }
 
@@ -28,9 +32,6 @@ string Instructor::getName() {
 	return instructorName;
 }
 
-//vector<Course*> &Instructor::getCourseList() {
-//	return courseList;
-//}
 
 void Instructor::firstTimeInstructor() {
 	cout << "Welcome to GatorGrader. Please enter your name:" << endl;
@@ -63,6 +64,7 @@ void Instructor::addCourse() {
 	Course *course = new Course(newCourseName, numOfCredits);
 	courseList.push_back(course);
 	course->save(newCourseName, 0, Course::courseSave);
+	course->save(to_string(numOfCredits), 0, Course::creditSave);
 	currentCourse = course;
 
 	cout << "Course '" << newCourseName << "' added" << endl;
@@ -116,6 +118,7 @@ void Instructor::mainMenu() {
 	string courseChoice;
 
 	while (true) {
+	
 		cout << "Enter a course name to view options for that course or choose an option below:" << endl;
 		cout << "1. Add course" << endl;
 		cout << "2. Remove course" << endl;
@@ -126,11 +129,13 @@ void Instructor::mainMenu() {
 
 		if (courseChoice == "1" || courseChoice == "Add course" || courseChoice == "add course" || courseChoice == "Add Course") {
 			addCourse();
+			cin.ignore();
 		}
 
 		else if (courseChoice == "2" || courseChoice == "Remove course" || courseChoice == "remove course" || courseChoice == "Remove Course") {
 			removeCourse();
 		}
+
 
 		else {
 			for (unsigned int i = 0; i < courseList.size(); i++) {
@@ -140,7 +145,6 @@ void Instructor::mainMenu() {
 					currentCourse->courseMenu();
 				}
 			}
-
 			if (courseFound == false) {
 				cout << "You have no course '" << courseChoice << "'." << endl;
 			}
@@ -151,6 +155,7 @@ void Instructor::mainMenu() {
 void Instructor::init() {
 	ifstream file("courses.txt");
 	string courseName;
+	int numOfCredits;
 	string roleOption;
 	cout << "Welcome to Gator Grader. Please enter if you are a student or instructor" << endl;
 	getline(cin, roleOption);
@@ -166,30 +171,25 @@ void Instructor::init() {
 	else {
 		string foundCourseData;
 		string foundCourseName;
+		int foundCourseCredit = 0;
 		//findExistingStudent();
 		while (getline(file, foundCourseData)) {
 
+
 			if (foundCourseData.front() == '#') {
 				foundCourseData.erase(foundCourseData.begin());
-
-			//
-				//
-				//
-				//
-				//
-				//
-				//
-				//
-				//
-				//
-				// addCourse(foundCourseData);
-
 				addCourse(foundCourseData, 0);
 				foundCourseName = foundCourseData;
-				courseName = foundCourseName;
-				//findExistingStudent(courseName);
 				continue;
-			}			
+			}
+
+			if (foundCourseData.front() == '*') {
+				foundCourseData.erase(0, foundCourseName.size() +1);
+				foundCourseCredit = atoi(foundCourseData.c_str());
+				numOfCredits = foundCourseCredit;
+				addCourse(foundCourseName, numOfCredits);
+				continue;
+			}
 
 			if (foundCourseData.at(foundCourseName.size()) == '$') {
 				foundCourseData.erase(0, foundCourseName.size() + 1);

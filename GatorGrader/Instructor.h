@@ -16,14 +16,17 @@ class Course;
 class Instructor {
 private:
 	std::string instructorName;
-	std::vector<Course*> courseList;
 public:
+	std::vector<Course*> courseList;
 	Course *currentCourse;
 	Instructor();
 	Instructor(std::string name);	
 	void setName(std::string name);
 	std::string getName();
+	//void setCredits(int credits);
+	//int getCredits();
 	int courseNum; 
+	int numOfCredits;
 	//std::vector<Course*> &getCourseList();
 	void firstTimeInstructor();
 	void addCourse();

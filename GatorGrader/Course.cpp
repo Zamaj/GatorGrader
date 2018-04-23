@@ -61,8 +61,13 @@ string Course::tag(saveType type) {
 		return tag;
 	}
 
-	if (type = masterAssignmentSave) {
+	if (type == masterAssignmentSave) {
 		tag = getCourseName().append("&");
+		return tag;
+	}
+	
+	if (type == creditSave) {
+		tag = getCourseName().append("*");
 		return tag;
 	}
 }
@@ -210,14 +215,14 @@ void Course::save(string newItem, double numPoints, saveType addItem) {
 
 		if (addItem == studentSave) {
 			if (it->substr(1, it->back()) == courseName) {
-				fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
+				fileContent.insert(it + 2, newItem.insert(0, tag(addItem)));
 				break;
 			}
 		}
 
 		if (addItem == assignmentSave) {			
 			if (it->substr(0, courseName.size()) == courseName && it->at(courseName.size()) == '$') {							
-				fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
+				fileContent.insert(it + 2, newItem.insert(0, tag(addItem)));
 			}	
 		}
 
@@ -225,13 +230,20 @@ void Course::save(string newItem, double numPoints, saveType addItem) {
 			if (it->substr(1, it->back()) == courseName) {
 				newItem.insert(0, tag(addItem));
 				newItem.append(to_string(numPoints));
-				fileContent.insert(it + 1, newItem);
+				fileContent.insert(it + 2, newItem);
 			}
 		}
 
 		if (addItem == gradeSave) {
 			if (it->substr(0, courseName.size()) == courseName && it->at(courseName.size()) == '@') {
 				fileContent[i].append(to_string(numPoints));
+			}
+		}
+
+		if (addItem == creditSave) {
+			if (it->substr(1, it->back()) == courseName) {
+				fileContent.insert(it + 1, newItem.insert(0, tag(addItem)));
+				break;
 			}
 		}
 	}
@@ -257,9 +269,33 @@ void Course::refresh() {
 void Course::print() {
 
 	cout << courseName << endl;
-
 	cout << "Credits: ";
-	cout << numOfCredits << endl;
+	
+	
+	string line;
+	string credits; // credit you are looking for
+	string name; //name of course we are lookign for 
+	
+	ifstream file("courses.txt");
+	
+	file.seekg(0, ios::beg);
+	while (getline(file, line)) {
+		if (line.front() == '#') {
+			line.erase(line.begin());
+			name = line;
+			continue;
+		}
+		if (name == courseName) {
+			credits = line.substr(line.find("*") + 1);
+			break;
+		}
+		else {
+			continue;
+		}
+
+	}
+
+	cout << credits << endl;
 
 
 	cout << "Students:" << endl;

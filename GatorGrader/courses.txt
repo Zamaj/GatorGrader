@@ -1,14 +1,37 @@
-#Calc 2
-#Calculus 3
-#Discrete Structures
-Discrete Structures$Zach Jackson
+#calc 3
+calc 3*23
+calc 3&Exam 2100.000000
+calc 3$May Song
+calc 3$Abby Mitchell
+calc 3@Exam 2100.000000200.000000
+calc 3@Exam 2100.000000200.000000
+calc 3&Exam 1300.000000
+calc 3$may song
+calc 3$Abby Mitchell
+calc 3@Exam 2100.000000200.000000
+calc 3@Exam 2100.000000200.000000
+calc 3@Exam 1100.000000200.000000
+calc 3@Exam 1100.000000200.000000
+#Calc 10
+Calc 10*45
+Calc 10$John Smith
+Calc 10$May Song
+Calc 10$Abby Mitchell
+#Calc 3
+Calc 3*2
+#Calc 8
+Calc 8$Abby Mitchell
+Calc 8*45
+#clac 5
+clac 5*3
+#Calculus 1
+Calculus 1*4
+Calculus 1&Project 100
+Calculus 1$John Smith
+Calculus 1$Zach Jackson
+Calculus 1$Denisse Ventura
 #Programming Fundamentals 2
-Programming Fundamentals 2$Zach Jackson
-Programming Fundamentals 2&HW50.000000
-Programming Fundamentals 2&Exam 180.000000
+Programming Fundamentals 2*9
+Programming Fundamentals 2&Final 300
 Programming Fundamentals 2$Brandon Payne
-Programming Fundamentals 2@HW
-Programming Fundamentals 2@Exam 178.00000078.000000
 Programming Fundamentals 2$Zoe Frogillini
-Programming Fundamentals 2@HW
-Programming Fundamentals 2@Exam 178.00000078.000000
