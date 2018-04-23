@@ -43,6 +43,7 @@ public:
 	void addCourse();
 	void addCourse(std::string name);
 	void removeCourse();
+	void listCourses();
 	void mainMenu();
 	bool init();
 	void findExistingStudent();

@@ -128,14 +128,19 @@ void Instructor::removeCourse() {
 	cout << "Course '" << removeName << "' has been removed" << endl;
 }
 
-//main menu for instructor
-void Instructor::mainMenu() {
-
-	//lists the courses the instructor currently has
+//lists the courses the instructor currently has
+void Instructor::listCourses()
+{
 	cout << "Your Courses:" << endl;
 	for (unsigned int i = 0; i < courseList.size(); i++) {
 		cout << courseList[i]->getCourseName() << endl;
 	}
+}
+
+//main menu for instructor
+void Instructor::mainMenu() {
+
+	listCourses();
 
 	string courseChoice;
 
@@ -144,7 +149,8 @@ void Instructor::mainMenu() {
 		cout << "Enter a course name to view options for that course or choose an option below:" << endl;
 		cout << "1. Add course" << endl;
 		cout << "2. Remove course" << endl;
-		cout << "3. Exit menu" << endl;
+		cout << "3. View courses" << endl;
+		cout << "4. Exit menu" << endl;
 
 		getline(cin, courseChoice);
 
@@ -159,6 +165,10 @@ void Instructor::mainMenu() {
 			removeCourse();
 		}
 		else if (courseChoice == "3")
+		{
+			listCourses();
+		}
+		else if (courseChoice == "4")
 		{
 			break;
 		}
@@ -496,4 +506,5 @@ void Instructor::setGradingScale() {
 		cout << frequencyCounter;
 	}
 
-}*/
+}
+*/
