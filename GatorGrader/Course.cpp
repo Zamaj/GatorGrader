@@ -91,6 +91,7 @@ void Course::addStudent()
 	Student *student = new Student(newStudentFirstName, newStudentLastName, newStudentName);
 	studentList.push_back(student);
 
+
 	save("", newStudentName, 0, studentSave);	
 
 	cout << "Student '" << newStudentFirstName << " " << newStudentLastName << "' added to course " << courseName << endl;
@@ -380,6 +381,9 @@ void Course::refresh() {
 void Course::print() {
 
 	cout << courseName << endl;
+	
+	//Alphabetical Order
+	studentList = studentAlphaSort();
 
 	cout << "Students:" << endl;
 	for (unsigned int i = 0; i < studentList.size(); i++) {
@@ -453,3 +457,77 @@ void Course::courseMenu()
 		}
 	}
 }
+
+	//Alphabetical Sorter
+	std::vector<Student*> Course::studentAlphaSort() {
+		vector<Student*> alphaSort = studentList;
+		std::string a;
+		std::string b;
+
+		for (unsigned int i = 0; i < studentList.size() - 1; i++) {
+
+			for (unsigned int j = 0; j < alphaSort.size() - i - 1; j++) {
+				a = alphaSort[j]->getLastName();
+				b = alphaSort[j + 1]->getLastName();
+
+				//for loop to go through the next character if they equal each other
+				for (unsigned int k = 0; k < a.size(); k++) {
+					if (a[k] > b[k]) {
+						iter_swap(alphaSort.begin() + j, alphaSort.begin() + j + 1);
+					}
+					else if (a[k] == b[k]) {
+						continue;
+					}
+					else {
+						break;
+					}
+				}
+
+			}
+		}
+		return alphaSort;
+	}
+
+	//Test with Average Grade for each student
+	void Course::printStudentRank() {
+		vector<Student*> rankSort = studentList;
+		double a;
+		double b;
+
+		//Swaps through Student List based on grades in course
+		for (unsigned int i = 0; i < studentList.size() - 1; i++) {
+
+			for (unsigned int j = 0; j < rankSort.size() - i - 1; j++) {
+
+				a = rankSort[j]->getAverageGrade();
+				b = rankSort[j + 1]->getAverageGrade();
+
+				if (a < b) {
+					iter_swap(rankSort.begin() + j, rankSort.begin() + j + 1);
+				}
+
+			}
+		}
+
+		cout << "Student Rank:" << endl;
+		int rank = 1;
+
+		//Prints out Ranks
+		for (unsigned int i = 0; i < rankSort.size() - 1; i++) {
+			a = rankSort[i]->getAverageGrade();
+			b = rankSort[i + 1]->getAverageGrade();
+
+			cout << rank << ". ";
+			cout << rankSort[i]->getFirstName() << " " << rankSort[i]->getLastName() << endl;
+
+			if (a > b) {
+				rank++;
+			}
+
+		}
+
+		//Prints the Last Student's Rank
+		cout << rank << ". ";
+		cout << rankSort[rankSort.size() - 1]->getFirstName() << " " << rankSort[rankSort.size() - 1]->getLastName() << endl;
+
+	}

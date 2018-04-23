@@ -6,12 +6,25 @@ using namespace std;
 int main()
 {	
 	Instructor *instructor = new Instructor();
-	
+
+	//calls method init() in instructor class
 	instructor->init();
 
-	instructor->mainMenu();
+	string exitOption;
+	//gives student option to exit from seeing their courses
+	cout << "To exit, press E" << endl;
+	getline(cin, exitOption);
 
-	//instructor->currentCourse->print();
+	if (exitOption == "E") {
+		return 0;
+	}
 
-    return 0;
+	//checks if boolean variable ifStudent is false
+	//if variable is false, meaning that user is an instructor, calls mainMenu() function, which
+	//is for instructors to then manage courses
+	if (instructor->ifStudent == false) {
+		instructor->mainMenu();
+	}
+
+
 }

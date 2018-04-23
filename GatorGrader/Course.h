@@ -23,6 +23,7 @@ public:
 	enum saveType {courseSave, studentSave, assignmentSave, masterAssignmentSave, gradeSave};
 	Course(std::string name);
 	~Course();
+	
 	void setCourseName(std::string name);
 	std::string getCourseName();
 	const vector<Student*>& getStudentList();
@@ -38,4 +39,6 @@ public:
 	void print();
 	void courseMenu();
 	void refresh();
+	std::vector<Student*> studentAlphaSort();
+	void printStudentRank();
 };
